@@ -8,7 +8,11 @@
 
 <b>Web Crawler</b>: Là bọn làm hàng hóa nhái chuyên thu thập hoàng hóa xịn, sau đó làm giả hoặc sử dụng cho mục đích riêng
 
-<b>IPN</b> - Instant Payment Notification
+<b>IPN:</b> Instant Payment Notification
+
+<b>API:</b> Application Programing Interface
+
+<b>SDK:</b> Software Development Kit
 
 #### Set Access-Control-Allow-Origin header.
 
@@ -28,6 +32,31 @@ Về cơ bản thì nó không khác gì concept của HTTPS, tức là mã hóa
 
 # Docker
 
+Docker cải thiện quá trình development and deployment
+
+Development: quá trình code giữa các member trong team không
+
+<b>Before container:</b>
+
+- Install nhiều phần mềm
+- Quá trình install qua nhiều step
+- Khác hệ điều hành
+- Cồng kềnh phức tạp => tốn nhiều thời gian
+
+<b>After container</b>
+
+- One command to install the app
+- Packaged with all needed configuration
+- Run same app with 2 diff version
+
+Deployment:
+<b>Before container</b>
+
+- Dependency version conflict
+- ...
+
+Docker Compose takes care of creating a common Network
+
 1. Build images
 
 ```
@@ -45,6 +74,16 @@ docker run -d -it -p 3000:3000 name_image:v1
 ```
 docker update --restart=always 0576df221c0b
 ```
+
+- Volume
+
+$ docker run -v /home/mount/data:/var/lib/mysql/data
+
+$ docker run -v host_volumes:container_volumes
+
+- host_volumes: where on the host file system the reference is made
+- container_volumes: auto create by docker, each container a folder is generated the gets amounted
+- Can reference volumes by name
 
 ## Lưu ý
 
@@ -73,10 +112,51 @@ Docker = Immurable Infrastructure + Infrastructure as code
 1. Run jenkins and keep start automatically when Docker daemon restarts
 
 ```
-docker run -it -d --restart=always --name myjenkins -p 8080:8080 -p 50000:50000 -v /var/jenkins_home jenkins/jenkins
+docker run -it -d --restart=always --name myjenkins -p 8080:8080 -p 50000:50000 -v jenkins_home:/var/jenkins_home  jenkins/jenkins
 ```
 
 # Git
 
 [git] Keep empty directory by .gitkeep
 <code>.gitkeep</code> là một file giả dùng để giữ chỗ. Vì git không theo dõi thư mục nên có thể bỏ qua các thư mục trống, git chỉ theo dõi sự thay đổi của các file.
+
+# Google Search Skills
+
+- Notes:
+  - Thứ tự xuất hiện từ khóa khác nhau sẽ cho ra kết quả khác nhau
+  - Viết thường viết hoa không quan trọng
+  - Có một số kí tự đặc biệt mà google chưa phân biệt được
+  - Không cần quan tâm đến chính tả, ngữ pháp (search tiếng anh)
+  - Chú ý đến mạo từ đầu câu
+- Tips:
+
+  - Định nghĩa nhanh
+
+    `[define blockchain]` thay vì `[what is blockchain]`
+
+  - Tìm từ trang cụ thể
+
+    `[nodejs site:stackoverflow.com]` kèm với domain
+
+  - Tìm theo loại file
+
+    `[UML filetype:pdf]` kèm với file type
+
+  - Loại bỏ từ khóa bất kì (đặt dấu “-” trước từ khóa)
+
+    `[sách nguyễn ngọc thuần -tiki -fahasa -lazada -vinabook]`
+
+  - Tìm câu trích dẫn (đặt câu trích dẫn vào dấu ngoặc kép)
+  - Tìm kiếm theo nhiều từ khóa (kết hợp keyword với 'or')
+
+    `[keywordA OR keywordB]`
+
+  - Kết quả trả ra bắt buộc phải có từ khóa đó (dùng 'intext' trước keyword cần có)
+
+    `[TừKhóa1 TừKhóa2 intext:TừKhóa3]`
+
+# Javascript
+
+- JS array vs object vs map
+  - Cần truy cập vào 1 mảng bằng khóa mà không quan tâm đến thứ tự => dùng object
+  - Nếu quan tâm đến thứ tự chèn => dùng Map (new Map())
