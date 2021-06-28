@@ -4,8 +4,6 @@
 
 <b>Main In The Middle(MITM)</b>: Kẻ chặn Web API thông qua việc can thiệp vào con đường vận chuyển của mạng máy tính.
 
-<b>Cross-origin resource sharing (CORS)</b>: Bọn cướp trên núi giả dạng nông dân để dùng hàng hóa từ thị trấn. CORS không chống việc bất kỳ ai đó gọi API, CORS header chỉ có tác dụng với <b>request từ trình duyệt.</b>
-
 <b>Web Crawler</b>: Là bọn làm hàng hóa nhái chuyên thu thập hoàng hóa xịn, sau đó làm giả hoặc sử dụng cho mục đích riêng
 
 <b>IPN:</b> Instant Payment Notification
@@ -13,6 +11,8 @@
 <b>API:</b> Application Programing Interface
 
 <b>SDK:</b> Software Development Kit
+
+<b>Deep link:</b> Deep link là các đường dẫn được chia sẻ trên nền tảng mobile, vận hành khá giống hyperlink nhưng thay vì dẫn người dùng đến ngay một địa chỉ web page nào đó, deep link dẫn họ tới một màn hình cụ thể ngay trong ứng dụng.
 
 #### Set Access-Control-Allow-Origin header.
 
@@ -155,8 +155,56 @@ docker run -it -d --restart=always --name myjenkins -p 8080:8080 -p 50000:50000 
 
     `[TừKhóa1 TừKhóa2 intext:TừKhóa3]`
 
-# Javascript
+## Javascript
 
 - JS array vs object vs map
   - Cần truy cập vào 1 mảng bằng khóa mà không quan tâm đến thứ tự => dùng object
   - Nếu quan tâm đến thứ tự chèn => dùng Map (new Map())
+
+## Web security knowledge (HTTPS, TLS, SSL, CORS, CSP)
+
+https://dev.to/ahmedatefae/web-security-knowledge-you-must-understand-it-part-i-https-tls-ssl-cors-csp-298l
+
+### HTTPS
+
+The secure version of HTTP, It uses encryption communication protocol, named Transport Layer Security (TLS), was known as Secure Sockets Layer (SSL).
+
+### TLS (Transport Layer Security)
+
+Bất kì ứng dụng hoặc trang web nào sử dụng TLS đều phải cài đặt chứng chỉ TLS (còn được gọi là chứng chỉ SSL) trên máy chủ. được cấp cho người sở hữu Domain để cài đặt chứng chỉ đó trên máy chủ.
+
+Nó chứa thông tin rất quan trọng về chủ sở hữu, các khóa riêng tư và công khai để sử dụng trong việc mã hóa và giải mã thông tin liên lạc.
+
+![](images/https-handshake.png 'https handshake')
+
+### SSL (Secure Sockets Layer)
+
+### What is the difference between TLS and SSL?
+
+SSL is the older version of the TLS, the name changed after the Internet Engineering Task Force (IETF) be the owner of the SSL development after Netscape, some developer nowadays uses the SSL and TLS to referring for the same thing.
+
+### CORS (Cross-origin resource sharing)
+
+Bọn cướp trên núi giả dạng nông dân để dùng hàng hóa từ thị trấn. CORS không chống việc bất kỳ ai đó gọi API, CORS header chỉ có tác dụng với <b>request từ trình duyệt.</b>
+
+### CSP (Content Security Policy)
+
+lớp bảo mật hơn giúp phát hiện và giảm thiểu các loại tấn công khác nhau như (Cross-Site Scripting (XSS), injection attacks, ClickJacking, ETC ...).
+
+CSP sử dụng khái niệm Directives mà mọi Chỉ thị phải chỉ định tài nguyên có thể tải từ đâu, ngăn trình duyệt tải dữ liệu từ bất kỳ vị trí nào khác.
+
+#### XSS (Cross-Site Scripting)
+
+Lỗ hổng cho phép hacker chèn script vào trang web để client thự thi nó để lấy các dữ liệu nhạy cảm như cookie, session’s info and site-specific information. Vì web-app không sử dụng đủ các phương thức xác thực và mã hóa. trình duyệt của người dùng thì không thể phát hiện ra 1 đoạn script người dùng chèn vào có nguy hiểm hay không
+
+#### Data injection attacks
+
+là một mã được được đưa vào mạng. mã này lấy tất cả thông tin từ database đến kẻ tấn công. SQL injection là một loại
+
+#### Click jacking || UI redress attack (Tấn công chỉnh sửa giao diện người dùng)
+
+attacker đành lừa người dùng nhấp vào nút hoặc liên kết trên 1 trang khác sử dụng nhiều lớp trong suốt. có thể redirect tới các trang mà người dùng không mong muôn
+
+## Web server
+
+### Nginx
