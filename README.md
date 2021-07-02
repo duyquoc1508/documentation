@@ -14,6 +14,12 @@
 
 <b>Deep link:</b> Deep link là các đường dẫn được chia sẻ trên nền tảng mobile, vận hành khá giống hyperlink nhưng thay vì dẫn người dùng đến ngay một địa chỉ web page nào đó, deep link dẫn họ tới một màn hình cụ thể ngay trong ứng dụng.
 
+Có 3 loại deep link:
+
+- Basic deep link
+- Deferred deep link
+- Contextual deep link
+
 #### Set Access-Control-Allow-Origin header.
 
 Đây là header được <b>server trả về</b> để báo cho trình duyệt biết: "Tao chỉ cho phép trang web có domain này gọi đến tao thôi". Phương thức lưu giữ phiên đăng nhập sử dụng cookie sẽ có đặc điểm của cookie đó là tự gắn cookie vào request khi gọi tới domain gốc. Do vậy nếu bạn vào trang web fakezalo.com, trang web này hoàn toàn có thể gọi lên API của Zalo để lấy thông tin người dùng đang đăng nhập hiện tại của bạn (do khi gọi API của Zalo sẽ tự có cookie của Zalo). Access-Control-Allow-Origin header sinh ra là để phòng chống việc này.
@@ -208,3 +214,17 @@ attacker đành lừa người dùng nhấp vào nút hoặc liên kết trên 1
 ## Web server
 
 ### Nginx
+
+Đóng vai trò như một cổng kết nối giữa internet và back-end
+
+## Phân biệt Web Server vs. Application Server
+
+![](images/webserver-vs-applicationserver.png 'The difference of web server and application server')
+
+![](images/Webexplain.png 'Web Server and Application Server | Explained')
+Application server không require. nhưng nó được require khi ứng dụng được yêu cầu xử lý 'logic kinh doanh' mà web server không thể xử lý được
+
+ref:
+
+- https://hiepsharing.com/phan-biet-web-server-vs-application-server/
+- https://www.youtube.com/watch?v=thJSev60yfg
