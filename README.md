@@ -228,3 +228,19 @@ ref:
 
 - https://hiepsharing.com/phan-biet-web-server-vs-application-server/
 - https://www.youtube.com/watch?v=thJSev60yfg
+
+## Mã hóa và giải mã đường truyền
+
+- Mã hóa và giải mã: bảo đảm tính bảo mật (encryption vs decryption): bảo đảm tính bảo mật của dữ liệu
+- Ký và xác minh (Signing And Verification): (signature or checksum) Signing is different from encryption, in that it enables you to assert authenticity, rather than confidentiality. Bảo đảm tính xác thực thay vì bảo mật
+- Note that only the party with the private key can sign a message, but anyone with the public key can verify it.
+
+ref:
+
+- https://www.sohamkamani.com/nodejs/rsa-encryption/#rsa-encryption-in-a-nutshell
+
+## Unicode, UTF-8, UTF-16
+
+ref:
+
+- https://kipalog.com/posts/Unicode-la-charset--UTF8--UTF16-la-phuong-thuc-Encode-Decode
