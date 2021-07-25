@@ -244,3 +244,51 @@ ref:
 ref:
 
 - https://kipalog.com/posts/Unicode-la-charset--UTF8--UTF16-la-phuong-thuc-Encode-Decode
+
+## Blockchain
+
+### Smart Contract
+
+The ERC721 Standard states that:
+
+> “Every ERC-721 compliant contract must implement the ERC721 and ERC165 interfaces”
+
+#### Interfaces
+
+An <b>interface</b> is basically an abstract contract, but the only thing you can define are unimplemented functions. It’s an outline, written in Solidity code, which ensures contracts written by other developers all work well together, without having to know each other’s code base.
+
+So by just using an interface, you’re telling other developers about some of the functions your contract has, and how to use them. Easy!
+
+#### ERC 165
+
+It only has one function! The ERC165 Standard is just a way of checking if your contract’s fingerprints match the fingerprint of any given interface. Let’s have a look at the ERC165 Standard interface in its entirety:
+
+```
+interface ERC165 {
+ /// @notice Query if a contract implements an interface
+ /// @param interfaceID The interface identifier, as
+ ///  specified in ERC-165
+ /// @dev Interface identification is specified in
+ ///  ERC-165. This function uses less than 30,000 gas.
+ /// @return `true` if the contract implements `interfaceID`
+ ///  and `interfaceID` is not 0xffffffff, `false` otherwise
+ function supportsInterface(bytes4 interfaceID) external view returns (bool);
+}
+```
+
+#### DEFI 
+Model:
+![](images/defi-model.png 'Defi model')
+Explain:
+-  Bride: Thông những cái blockchain với nhau. Vì các block chain có nhu cầu giao tiếp với nhau (cross-chain)
+- Assets: Tài sản (finace). Tiền…
+- Liquidity Provider: cung cấp thanh khoản cho sàn
+- AMM – DEX: Sàn giao dịch (binance - kubi)
+- Oracle: Cấp dữ liệu vào bộ máy để Dapp hoạt đông (chainLink)
+- Indexer: Ngược lại với Oracle. Đọc dữ liệu từ dapp đưa ra ngoài
+- NFT:  Đưa tài sản thật vào hệ thống để lấy tiền (Giống như đi vay - bán)
+- RWA: read world asset
+- Insurance: Bảo hiểm dapp. Có trách nhiệm bảo hiểm
+- Audit: Kiểm tra hợp đồng thông minh. K có trách nhiệm đền bù
+- Predict market: Thị trường tương lai
+
