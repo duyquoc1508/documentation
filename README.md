@@ -280,7 +280,7 @@ interface ERC165 {
 Model:
 ![](images/defi-model.png 'Defi model')
 Explain:
--  Bride: Thông những cái blockchain với nhau. Vì các block chain có nhu cầu giao tiếp với nhau (cross-chain)
+-  Bridge: Thông những cái blockchain với nhau. Vì các block chain có nhu cầu giao tiếp với nhau (cross-chain)
 - Assets: Tài sản (finace). Tiền…
 - Liquidity Provider: cung cấp thanh khoản cho sàn
 - AMM – DEX: Sàn giao dịch (binance - kubi)
@@ -291,4 +291,11 @@ Explain:
 - Insurance: Bảo hiểm dapp. Có trách nhiệm bảo hiểm
 - Audit: Kiểm tra hợp đồng thông minh. K có trách nhiệm đền bù
 - Predict market: Thị trường tương lai
+
+##### topic 
+- lending
+- dexes
+- dericatives
+- payements
+- assets
 
