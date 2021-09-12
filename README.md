@@ -1,5 +1,14 @@
 # Some keyword should know
 
+<b>NPM</b>: Manages packages, you can install node.js packages, but doesn't make life easy executing any.
+
+<b>NPX</b>: A tool for executing Node packages.
+
+It doesn't matter whether you install that package globally or locally. NPX will temporarily install and run it. NPM also run package if you configure a package.json file and include it in the script section
+> So remember this, if you want to check/run a node package quickly without installing locally or globally use NPX.
+
+[NPM vs. NPX](https://stackoverflow.com/questions/50605219/difference-between-npx-and-npm)
+
 <b>API</b>: Nếu ứng dụng web là 1 tòa nhà kiến cố, vậy API là con đường ra vào toàn thành đó.
 
 <b>Main In The Middle(MITM)</b>: Kẻ chặn Web API thông qua việc can thiệp vào con đường vận chuyển của mạng máy tính.
@@ -247,7 +256,38 @@ ref:
 
 ## Blockchain
 
+## Binance chain vs Binance smart chain architecture
+
+- `Binance Chain`: Nền tảng blockchain riêng được tối ưu hóa tốc độc giao dịch(ultra-fast trading) và thông lượng giao dịch(high tx throughput). Chưa đủ linh hoạt vì không support smart contract. Tuy nhiên đây là cách thiết kế hệ thống có chủ đích để ngăn chặn sự tắt nghẽn (như Ether do CryptoKitties). primary focus, its native decentralized application (“dApp”) Binance DEX
+
+- `Binance Smart Chain`: Nền tảng blockchain có thể chạy smart contract chạy song song với Binace Chain. Use Proof of Staked Authority (PoSA) ~3s/block. Tương thích với (EVM). Có thể chạy độc lập khi không có Binace Chain. No block rewards. Validator stake BNB and accumulate tx fees.
+
+Binance Chain and BSC have a dual-chain architecture with cross-chain compatibility. 2 nền tảng bổ sung cho nhau và có thể chuyển tài sản qua lại giữa các nền tảng
+
+- Compare:
+![](images/BC_BSC.png 'compare BC_BSC')
+
+- Interactive:
+![](images/cross_chain.png 'cross chain')
+
+
 ### Smart Contract
+
+- ERC-20: 
+
+docs: https://eips.ethereum.org/EIPS/eip-20
+- ERC-721: NFTs
+
+docs: https://eips.ethereum.org/EIPS/eip-721
+- ERC-1155: Có thể được coi là một cải tiến trên cả ERC-721 và ERC-20. Nó tạo ra một tiêu chuẩn hỗ trợ cả token có thể thay thế lẫn nhau và không thể thay thế trong cùng một hợp đồng.
+
+docs: https://eips.ethereum.org/EIPS/eip-1155
+- Hỗ trợ cả ERC-20(fugiable) và ERC721(non-fungiable) 
+- Cho phép gửi nhiều loại token cùng lúc. đến cùng 1 địa chỉ
+- Cho phép quản lý nhiều loại token trên cùng một smart contract
+
+- BEP-2 chuẩn token trên binance chain
+- BEP-20 chuẩn token trên binance smart chain
 
 The ERC721 Standard states that:
 
@@ -299,3 +339,5 @@ Explain:
 - payements
 - assets
 
+Các positions ( tài sản trong các pool) sẽ được tracked theo một loại token được gọi là cToken. cToken là một loại ERC-20 nó thì đại diện cho một loại tài trong Compound. Ví dụ như nếu bạn deposit ETH vào Compound thì nó sẽ sinh ra lượng cETH tương ứng để chuyển vào tài khoản của bạn. Hay nếu bạn deposit một stablecoin DAI thì bạn cũng sẽ nhận được một lượng cDAI tương tự. Các loại cToken này được gọi là các đồng quản trị nó theo dõi các dòng tiền vào ra của liquidity pool, có thể hiểu là khi một lượng tài sản được deposit vào pool thì một lượng cToken tương ứng của loại tài sản đó sẽ được mint (in) ra và ngược lại khi một lượng tài sản được withdraw ra khỏi pool thì một lượng cToken tương ứng cũng sẽ bị burn (đốt) đi. Điều này giúp các smart contract có thể nắm được số lượng tài sản hiện có trong pool một cách dễ dàng.
+cToken này là đại diện cho lượng tài sản mà người dùng đã đóng góp vào pool nên họ có thể sử
