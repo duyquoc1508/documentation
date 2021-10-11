@@ -220,6 +220,10 @@ là một mã được được đưa vào mạng. mã này lấy tất cả th�
 
 attacker đành lừa người dùng nhấp vào nút hoặc liên kết trên 1 trang khác sử dụng nhiều lớp trong suốt. có thể redirect tới các trang mà người dùng không mong muôn
 
+#### Brute Force Attack
+
+Hacker nắm trong tay một danh sách rất lớn các username và password phổ biến hay được sử dụng. Sau đó họ gửi liên tục các truy vấn đăng nhập vào trang web, nếu tài khoản nào sai thì bỏ qua và tiếp tục thử lại với tài khoản khác. Cứ lần lượt như vậy sau đó "trộn" mật khẩu đến khi đăng nhập được thì thôi. Đó gọi là Brute force. Phương thức này là 1 cách để dò mật khẩu và tài khoản. Hay được khai thác bởi các website wordpress bởi hình thức tấn công này nhắm vào các mã nguồn thông dụng.
+
 ## Web server
 
 ### Nginx
