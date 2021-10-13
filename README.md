@@ -319,6 +319,15 @@ interface ERC165 {
  function supportsInterface(bytes4 interfaceID) external view returns (bool);
 }
 ```
+- **Overflow**: Ví dụ uint8 chỉ chứa các giá trị trong khoảng [0, 255]. Nếu giá trị hiện tại của uint8 là 255, khi tăng lên 1 đơn vị thì giá trị **không phải** là 256 mà là 1. Hiện tượng này được gọi là Overflow.
+
+- **Underflow**: Nếu giá trị hiện tại của uint8 là 0 khi giảm 1 đơn vị thì giá trị **không phải** là 0 mà là 255. Hiện tượng này được gọi là Underflow.
+
+Các lỗ hổng này có thể được attaker khai thác ở các hàm transfer hay increaseTimeLock,.... Lỗ hổng này tạm gọi là tràn số trong toán học. Các phiên bản Solidity từ 0.8.0 đã khắc phục được lỗi này, các phiên bản trở về trước phải sử dụng thư viện SafeMath để handle các lỗi liên quan đến các phép toán trong solidity
+
+- Abstract contract: biếu thị contract là trừ tượng, contract phải được khai báo là `abtract` khi có ít nhất 1 function không được implemented.
+- Interfase: Khác với `abstract`, toàn bộ function trong interface đều không được implement.
+- `virtual` and `override`: Một hàm chỉ được ghi đè nếu nó được khai báo là `virtual` hoặc được định nghĩa trong `interface` hay `abstract` contract. Khi muốn thay đổi hoặc ghi đè ta sửu dụng từ khóa `overrice`
 
 #### DEFI 
 Model:
