@@ -176,6 +176,13 @@ docker run -it -d --restart=always --name myjenkins -p 8080:8080 -p 50000:50000 
   - Cần truy cập vào 1 mảng bằng khóa mà không quan tâm đến thứ tự => dùng object
   - Nếu quan tâm đến thứ tự chèn => dùng Map (new Map())
 
+- Why `null >= 0 && null <= 0` but not `null == 0`?
+
+  + explained: https://stackoverflow.com/questions/2910495/why-null-0-null-0-but-not-null-0
+  + Summary:
+      + Relational Comparison: if both values are not type String, ToNumber is called on both. This is the same as adding a + in front, which for null coerces to 0.
+      + Equality Comparison: only calls ToNumber on Strings, Numbers, and Booleans.
+
 ## Web security knowledge (HTTPS, TLS, SSL, CORS, CSP)
 
 https://dev.to/ahmedatefae/web-security-knowledge-you-must-understand-it-part-i-https-tls-ssl-cors-csp-298l
