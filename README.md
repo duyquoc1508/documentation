@@ -45,6 +45,12 @@ Chung quy lại là phương pháp này bao gồm các bước:
 
 Về cơ bản thì nó không khác gì concept của HTTPS, tức là mã hóa và giải mã đầu cuối để người ở giữa không đọc được. Cái khác ở đây chính là HTTPS được trình duyệt thực hiện tự động, còn mã hóa API ta phải tự thực hiện trong code client.
 
+# REST APIs standard
+Best practice APIs endpoint
+[Read here](https://stackoverflow.blog/2020/03/02/best-practices-for-rest-api-design/)
+
+The standard best practice for REST APIs is to have a hyphen, not camelcase or underscores. [Link](https://stackoverflow.com/questions/10302179/hyphen-underscore-or-camelcase-as-word-delimiter-in-uris)
+
 # Docker
 
 Docker cải thiện quá trình development and deployment
