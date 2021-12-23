@@ -136,6 +136,15 @@ Docker = Immurable Infrastructure + Infrastructure as code
 docker run -it -d --restart=always --name myjenkins -p 8080:8080 -p 50000:50000 -v jenkins_home:/var/jenkins_home  jenkins/jenkins
 ```
 
+# Network
+
+## Ping
+
+Ping là 1 phần của ICMP (Internet Control Message Protocol) được sử dụng để khắc phục sự cố mạng TCP/IP. Ping cho phép kiểm tra xem máy chủ có còn **sống hay không**
+
+## Telnet
+
+Telnet là một chương trình TCP/IP. Cho phép chúng ta kết nối với máy tính từ xa trên **một cổng cụ thể**. Khi kết nối, nó lấy deamon đang chạy trên cổng đó.
 # Git
 
 [git] Keep empty directory by .gitkeep
