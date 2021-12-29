@@ -150,6 +150,11 @@ Telnet là một chương trình TCP/IP. Cho phép chúng ta kết nối với m
 [git] Keep empty directory by .gitkeep
 <code>.gitkeep</code> là một file giả dùng để giữ chỗ. Vì git không theo dõi thư mục nên có thể bỏ qua các thư mục trống, git chỉ theo dõi sự thay đổi của các file.
 
+Git không phân biệt được sự khác biệt khi thay đổi tên file chỉ khác với teen cũ các kí tự viết hoa và viết thường. Để git biết được sự thay đổi này thì dùng lệnh git để rename file.
+```
+git mv BlackList.sol Blaclist.sol
+```
+
 # Google Search Skills
 
 - Notes:
