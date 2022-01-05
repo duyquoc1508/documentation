@@ -309,6 +309,8 @@ Binance Chain and BSC have a dual-chain architecture with cross-chain compatibil
 docs: https://eips.ethereum.org/EIPS/eip-20
 - ERC-721: NFTs
 
+Non-fungible means not completely interchangeable. Không thể hoán đổi hoàn toàn cho nhau.
+
 docs: https://eips.ethereum.org/EIPS/eip-721
 - ERC-1155: Có thể được coi là một cải tiến trên cả ERC-721 và ERC-20. Nó tạo ra một tiêu chuẩn hỗ trợ cả token có thể thay thế lẫn nhau và không thể thay thế trong cùng một hợp đồng.
 
