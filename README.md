@@ -128,6 +128,13 @@ Sử dụng dockerfile để quản lý runtime enviroment
 
 Docker = Immurable Infrastructure + Infrastructure as code
 
+### Các lỗi hay gặp với docker
+
+- Ví dụ khi dockerize 1 server nodejs. Khi chạy và expose port ra thì server chạy hoàn toàn bình thường. Nhưng khi gọi đến resource từ máy vật lý thì không được và bị lỗi
+`curl : The underlying connection was closed: The connection was closed unexpectedly.`. Lúc này cần kiểm tra host của server đang chạy là gì. Nếu là `localhost` hay `127.0.0.1` thì sẽ bị lỗi này. Fix: Thay đổi host thành `0.0.0.0`
+
+![](images/docker-host-error.png 'docker error because host')
+
 # Jenkins
 
 1. Run jenkins and keep start automatically when Docker daemon restarts
