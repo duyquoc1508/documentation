@@ -21,6 +21,8 @@ It doesn't matter whether you install that package globally or locally. NPX will
 
 <b>SDK:</b> Software Development Kit
 
+<b>CCU:</b> Concurrent users (số lượng user đang hoạt động cùng một thời điểm)
+
 <b>Deep link:</b> Deep link là các đường dẫn được chia sẻ trên nền tảng mobile, vận hành khá giống hyperlink nhưng thay vì dẫn người dùng đến ngay một địa chỉ web page nào đó, deep link dẫn họ tới một màn hình cụ thể ngay trong ứng dụng.
 
 Có 3 loại deep link:
