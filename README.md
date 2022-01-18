@@ -143,6 +143,14 @@ Docker = Immurable Infrastructure + Infrastructure as code
 docker run -it -d --restart=always --name myjenkins -p 8080:8080 -p 50000:50000 -v jenkins_home:/var/jenkins_home  jenkins/jenkins
 ```
 
+# System architecture
+
+## Process vs. Thread
+
+### Key difference
+
+![](images/process-vs-thread.png 'process vs. thread')
+
 # Network
 
 ## Ping
