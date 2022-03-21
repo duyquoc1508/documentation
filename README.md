@@ -365,6 +365,12 @@ interface ERC165 {
  function supportsInterface(bytes4 interfaceID) external view returns (bool);
 }
 ```
+Why we need to check contract support an interface or not? => Solidity already provides a way for a contract to call functions from another contract. To make sure the called contract supports a function that you want to call. What we can do is add a validation check.
+
+That is what ERC165 is for — a standard to publish and detect what interfaces a smart contract implements.
+
+More: https://medium.com/@chiqing/ethereum-standard-erc165-explained-63b54ca0d273
+
 - **Overflow**: Ví dụ uint8 chỉ chứa các giá trị trong khoảng [0, 255]. Nếu giá trị hiện tại của uint8 là 255, khi tăng lên 1 đơn vị thì giá trị **không phải** là 256 mà là 1. Hiện tượng này được gọi là Overflow.
 
 - **Underflow**: Nếu giá trị hiện tại của uint8 là 0 khi giảm 1 đơn vị thì giá trị **không phải** là 0 mà là 255. Hiện tượng này được gọi là Underflow.
