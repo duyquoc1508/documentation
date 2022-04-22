@@ -21,6 +21,14 @@ It doesn't matter whether you install that package globally or locally. NPX will
 
 <b>SDK:</b> Software Development Kit
 
+<b>IP:</b> Internet Protocol address
+
+<b>DNS:</b> Domain Name System is a phonebook of Internet
+
+<b>OS:</b> Operating system
+
+<b>ERC:</b> Amazon Elastic Container Registry: là 1 private docker registry của Amazon. Dockerhub là 1 public docker registry. Docker registry là nới để host các image
+
 <b>CCU:</b> Concurrent users (số lượng user đang hoạt động cùng một thời điểm)
 
 <b>Deep link:</b> Deep link là các đường dẫn được chia sẻ trên nền tảng mobile, vận hành khá giống hyperlink nhưng thay vì dẫn người dùng đến ngay một địa chỉ web page nào đó, deep link dẫn họ tới một màn hình cụ thể ngay trong ứng dụng.
@@ -163,6 +171,10 @@ Ping là 1 phần của ICMP (Internet Control Message Protocol) được sử d
 
 Telnet là một chương trình TCP/IP. Cho phép chúng ta kết nối với máy tính từ xa trên **một cổng cụ thể**. Khi kết nối, nó lấy deamon đang chạy trên cổng đó.
 # Git
+
+`Git`: là Version control/source control systems
+
+`Github`: là Repo Hosting Services
 
 [git] Keep empty directory by .gitkeep
 <code>.gitkeep</code> là một file giả dùng để giữ chỗ. Vì git không theo dõi thư mục nên có thể bỏ qua các thư mục trống, git chỉ theo dõi sự thay đổi của các file.
