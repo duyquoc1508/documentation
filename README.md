@@ -234,6 +234,12 @@ git mv BlackList.sol Blaclist.sol
       + Relational Comparison: if both values are not type String, ToNumber is called on both. This is the same as adding a + in front, which for null coerces to 0.
       + Equality Comparison: only calls ToNumber on Strings, Numbers, and Booleans.
 
+- Javascript event loop explained
+![JS event loop](https://res.cloudinary.com/practicaldev/image/fetch/s--BLtCLQcd--/c_limit%2Cf_auto%2Cfl_progressive%2Cq_66%2Cw_880/https://devtolydiahallie.s3-us-west-1.amazonaws.com/gif14.1.gif)
+
+  - **Stack** là nơi lưu giữ các con trỏ hàm đang thực hiện,. Khi hàm bắt đầu chạy thì nhảy vào đây, hàm nào xong rồi thì đi ra. Do bản chất `stack` nên thằng nào vào sau sẽ ra trước.
+  - **Queue** là hàng đợi sự kiện, mỗi thằng sự kiện mới sẽ chui vào đây, thằng nào vào trước lấy trước. Sự kiện có thể là I/O event, timeout event, interval event, v.v..
+  - **Event loop** là 1 thằng chuyên đi nhặt các sự kiện trong hàng đợi (`queue`) để xử lý. Tuy nhiên nó chỉ nhặt khi và chỉ khi `stack` trống.
 ## Web security knowledge (HTTPS, TLS, SSL, CORS, CSP)
 
 https://dev.to/ahmedatefae/web-security-knowledge-you-must-understand-it-part-i-https-tls-ssl-cors-csp-298l
@@ -335,7 +341,7 @@ Binance Chain and BSC have a dual-chain architecture with cross-chain compatibil
 
 ### Smart Contract
 
-- ERC-20: 
+- ERC-20:
 
 docs: https://eips.ethereum.org/EIPS/eip-20
 - ERC-721: NFTs
@@ -346,7 +352,7 @@ docs: https://eips.ethereum.org/EIPS/eip-721
 - ERC-1155: Có thể được coi là một cải tiến trên cả ERC-721 và ERC-20. Nó tạo ra một tiêu chuẩn hỗ trợ cả token có thể thay thế lẫn nhau và không thể thay thế trong cùng một hợp đồng.
 
 docs: https://eips.ethereum.org/EIPS/eip-1155
-- Hỗ trợ cả ERC-20(fugiable) và ERC721(non-fungiable) 
+- Hỗ trợ cả ERC-20(fugiable) và ERC721(non-fungiable)
 - Cho phép gửi nhiều loại token cùng lúc. đến cùng 1 địa chỉ
 - Cho phép quản lý nhiều loại token trên cùng một smart contract
 
@@ -395,7 +401,7 @@ Các lỗ hổng này có thể được attaker khai thác ở các hàm transf
 - Interfase: Khác với `abstract`, toàn bộ function trong interface đều không được implement.
 - `virtual` and `override`: Một hàm chỉ được ghi đè nếu nó được khai báo là `virtual` hoặc được định nghĩa trong `interface` hay `abstract` contract. Khi muốn thay đổi hoặc ghi đè ta sửu dụng từ khóa `overrice`
 
-#### DEFI 
+#### DEFI
 Model:
 ![](images/defi-model.png 'Defi model')
 Explain:
@@ -411,7 +417,7 @@ Explain:
 - Audit: Kiểm tra hợp đồng thông minh. K có trách nhiệm đền bù
 - Predict market: Thị trường tương lai
 
-##### topic 
+##### topic
 - lending
 - dexes
 - dericatives
