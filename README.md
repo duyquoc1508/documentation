@@ -27,6 +27,8 @@ It doesn't matter whether you install that package globally or locally. NPX will
 
 <b>OS:</b> Operating system
 
+<b>AMQP:</b> Advanced message queue protocol
+
 <b>ERC:</b> Amazon Elastic Container Registry: là 1 private docker registry của Amazon. Dockerhub là 1 public docker registry. Docker registry là nới để host các image
 
 <b>CCU:</b> Concurrent users (số lượng user đang hoạt động cùng một thời điểm)
