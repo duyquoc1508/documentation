@@ -338,6 +338,10 @@ Binance Chain and BSC have a dual-chain architecture with cross-chain compatibil
 - Interactive:
 ![](images/cross_chain.png 'cross chain')
 
+### Blockchain layers (L0, L1, L2, L3) in a Diagram
+
+![](images/blockchain_layers.png 'blockchain layers diagrams')
+ref: https://medium.com/@nick.5montana/blockchain-layers-l0-l1-l2-l3-in-a-diagram-569162398db
 
 ### Smart Contract
 
