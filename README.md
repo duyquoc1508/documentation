@@ -29,6 +29,8 @@ It doesn't matter whether you install that package globally or locally. NPX will
 
 <b>AMQP:</b> Advanced message queue protocol
 
+<b>CDN:</b> Content delivery network
+
 <b>ERC:</b> Amazon Elastic Container Registry: là 1 private docker registry của Amazon. Dockerhub là 1 public docker registry. Docker registry là nới để host các image
 
 <b>CCU:</b> Concurrent users (số lượng user đang hoạt động cùng một thời điểm)
@@ -321,6 +323,13 @@ ref:
 ref:
 
 - https://kipalog.com/posts/Unicode-la-charset--UTF8--UTF16-la-phuong-thuc-Encode-Decode
+
+## Network
+<b>OSI</b>: Operating system interconnection model
+
+![](images/osi-model-7-layers.svg 'Osi model simple explained')
+
+OSI model là gì: https://www.cloudflare.com/learning/ddos/glossary/open-systems-interconnection-model-osi/
 
 ## Blockchain
 
