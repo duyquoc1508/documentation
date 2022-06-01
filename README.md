@@ -35,7 +35,15 @@ It doesn't matter whether you install that package globally or locally. NPX will
 
 <b>CCU:</b> Concurrent users (số lượng user đang hoạt động cùng một thời điểm)
 
+<b>C2S:</b> Client-to-Server Encryption: Phương thức mã hóa dữ liệu trong đó người gửi mã hóa dữ liệu gửi đi và server giải mã gửi lại cho người nhận
+
+<b>E2E | E2EE:</b> End-to-End Encryption: Dữ liệu gửi đi được mã hóa tại điểm cuối của người gửi. Người nhận là người duy nhất có thể giải mã được dữ liệu đó. Server chỉ có nhiệm vụ vận chuyển dữ liệu
+
 <b>Deep link:</b> Deep link là các đường dẫn được chia sẻ trên nền tảng mobile, vận hành khá giống hyperlink nhưng thay vì dẫn người dùng đến ngay một địa chỉ web page nào đó, deep link dẫn họ tới một màn hình cụ thể ngay trong ứng dụng.
+
+<b>Concurrency</b>: Đa luồng là khả năng 1 chương trình có thể **điều phối** nhiều tác vụ trong cùng 1 khoảng thời gian và trong quá trình điều phối chỉ cho phép **1 tác vụ chạy trong 1 thời điểm**
+
+<b>Parallelism</b>: Là khả năng 1 chương trình có thể **thực thi** 2 hoặc nhiều task trong **cùng một thời điểm** với điều kiện cpu phải có từ 2 core trở lên
 
 Có 3 loại deep link:
 
