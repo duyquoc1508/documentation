@@ -5,6 +5,7 @@
 <b>NPX</b>: A tool for executing Node packages.
 
 It doesn't matter whether you install that package globally or locally. NPX will temporarily install and run it. NPM also run package if you configure a package.json file and include it in the script section
+
 > So remember this, if you want to check/run a node package quickly without installing locally or globally use NPX.
 
 [NPM vs. NPX](https://stackoverflow.com/questions/50605219/difference-between-npx-and-npm)
@@ -39,11 +40,15 @@ It doesn't matter whether you install that package globally or locally. NPX will
 
 <b>E2E | E2EE:</b> End-to-End Encryption: Dữ liệu gửi đi được mã hóa tại điểm cuối của người gửi. Người nhận là người duy nhất có thể giải mã được dữ liệu đó. Server chỉ có nhiệm vụ vận chuyển dữ liệu
 
+<b>Concurrency</b>: Đa luồng là khả năng 1 chương trình có thể **điều phối (dealing)** nhiều tác vụ trong cùng 1 khoảng thời gian và trong quá trình điều phối chỉ cho phép **1 tác vụ chạy trong 1 thời điểm**
+
+<b>Parallelism</b>: Là khả năng 1 chương trình có thể **thực thi (doing)** 2 hoặc nhiều task trong **cùng một thời điểm** với điều kiện cpu phải có từ 2 core trở lên
+
+<b>Race condition</b>: Lỗi xảy ra khi 2 hoặc nhiều threads cùng thay đổi dữ liệu của 1 biến (vùng nhớ). Dẫn tới tính không chính xác của dữ liệu. Là 1 vấn đề cần lưu ý trong lập trình concurrency.
+
+<b>Deadlock</b>: Xảy ra khi 2 hoặc nhiều threads cùng chờ dữ liệu của nhau (A đợi B và B cũng đợi A), dẫn tới đợi mãi mà không làm gì. Là 1 lỗi cần lưu ý trong lập trình concurrency
+
 <b>Deep link:</b> Deep link là các đường dẫn được chia sẻ trên nền tảng mobile, vận hành khá giống hyperlink nhưng thay vì dẫn người dùng đến ngay một địa chỉ web page nào đó, deep link dẫn họ tới một màn hình cụ thể ngay trong ứng dụng.
-
-<b>Concurrency</b>: Đa luồng là khả năng 1 chương trình có thể **điều phối** nhiều tác vụ trong cùng 1 khoảng thời gian và trong quá trình điều phối chỉ cho phép **1 tác vụ chạy trong 1 thời điểm**
-
-<b>Parallelism</b>: Là khả năng 1 chương trình có thể **thực thi** 2 hoặc nhiều task trong **cùng một thời điểm** với điều kiện cpu phải có từ 2 core trở lên
 
 Có 3 loại deep link:
 
@@ -68,6 +73,7 @@ Chung quy lại là phương pháp này bao gồm các bước:
 Về cơ bản thì nó không khác gì concept của HTTPS, tức là mã hóa và giải mã đầu cuối để người ở giữa không đọc được. Cái khác ở đây chính là HTTPS được trình duyệt thực hiện tự động, còn mã hóa API ta phải tự thực hiện trong code client.
 
 # REST APIs standard
+
 Best practice APIs endpoint
 [Read here](https://stackoverflow.blog/2020/03/02/best-practices-for-rest-api-design/)
 
@@ -153,7 +159,7 @@ Docker = Immurable Infrastructure + Infrastructure as code
 ### Các lỗi hay gặp với docker
 
 - Ví dụ khi dockerize 1 server nodejs. Khi chạy và expose port ra thì server chạy hoàn toàn bình thường. Nhưng khi gọi đến resource từ máy vật lý thì không được và bị lỗi
-`curl : The underlying connection was closed: The connection was closed unexpectedly.`. Lúc này cần kiểm tra host của server đang chạy là gì. Nếu là `localhost` hay `127.0.0.1` thì sẽ bị lỗi này. Fix: Thay đổi host thành `0.0.0.0`
+  `curl : The underlying connection was closed: The connection was closed unexpectedly.`. Lúc này cần kiểm tra host của server đang chạy là gì. Nếu là `localhost` hay `127.0.0.1` thì sẽ bị lỗi này. Fix: Thay đổi host thành `0.0.0.0`
 
 ![](images/docker-host-error.png 'docker error because host')
 
@@ -169,9 +175,35 @@ docker run -it -d --restart=always --name myjenkins -p 8080:8080 -p 50000:50000 
 
 ## Process vs. Thread
 
+![](images/process-vs-thread-diagram.png 'process vs. thread diagram')
+
+- **Process**: 1 process đại diện cho 1 chương trình được running trong hệ điều hành. Ví dụ mở app chrome thì chrome đại diện cho 1 process. Trong process có nhiều thread
+- **Static**: Các biến được khai báo là static trong code được lưu vào đây
+- **Heap**: Vùng nhớ cho các vấn đề cấp phát động
+- **Code**: Để chương trình chạy được thì code phải được nạp lên process. Nên code toàn bộ source code của chương trình phải được lưu lại tại đây
+- **Thread**: Là tập con của 1 process
+  - **Registers**: Thanh ghi. Có 2 thanh ghi chính là `PC-Program Counter` và `Status Register`
+    - Program Counter: Quản lý dòng lệnh nào sẽ chạy tiếp theo (giống lúc debug)
+    - Status Register: Lưu lại trạng thái của thread đó. Ví dụ như lập trình đa luồng, các tác vụ xen kẽ lẫn nhau, thì khi tạm dừng tác vụ này để tác vụ khác chạy, `status register` có tác dụng lưu lại trạng thái của tác vụ dừng (ví dụ download: 30%), để khi tác vụ được chạy lại thì thread sẽ biết chạy tác vụ đó từ đâu (ví dụ chạy lần sau, download từ 30% trở đi)
+  - **Stack**: Dùng để lưu trữ các biến cục bộ trong hàm, tham số truyền vào...
+
 ### Key difference
 
 ![](images/process-vs-thread.png 'process vs. thread')
+
+## Concurrency vs. Parallelism
+
+### Key difference
+
+![](images/concurrency-vs-parallelism.png 'concurrency vs. parallelism')
+
+## How concurrency work
+
+Mô hình mô tả cách hoạt động của các thread trong concurrency
+![](images/how-concurrency-work.png 'how concurrency work')
+
+- T1, T2 ... đại diện cho các thread đang chạy trong 1 chương trình đa luồng
+- Khi switch context bước thứ 2 (Lưu context) là nhiệm vụ của thanh ghi `Status Register` đề cập phía trên
 
 # Network
 
@@ -182,6 +214,7 @@ Ping là 1 phần của ICMP (Internet Control Message Protocol) được sử d
 ## Telnet
 
 Telnet là một chương trình TCP/IP. Cho phép chúng ta kết nối với máy tính từ xa trên **một cổng cụ thể**. Khi kết nối, nó lấy deamon đang chạy trên cổng đó.
+
 # Git
 
 `Git`: là Version control/source control systems
@@ -192,6 +225,7 @@ Telnet là một chương trình TCP/IP. Cho phép chúng ta kết nối với m
 <code>.gitkeep</code> là một file giả dùng để giữ chỗ. Vì git không theo dõi thư mục nên có thể bỏ qua các thư mục trống, git chỉ theo dõi sự thay đổi của các file.
 
 Git không phân biệt được sự khác biệt khi thay đổi tên file chỉ khác với teen cũ các kí tự viết hoa và viết thường. Để git biết được sự thay đổi này thì dùng lệnh git để rename file.
+
 ```
 git mv BlackList.sol Blaclist.sol
 ```
@@ -234,22 +268,24 @@ git mv BlackList.sol Blaclist.sol
 ## Javascript
 
 - JS array vs object vs map
+
   - Cần truy cập vào 1 mảng bằng khóa mà không quan tâm đến thứ tự => dùng object
   - Nếu quan tâm đến thứ tự chèn => dùng Map (new Map())
 
 - Why `null >= 0 && null <= 0` but not `null == 0`?
 
-  + explained: https://stackoverflow.com/questions/2910495/why-null-0-null-0-but-not-null-0
-  + Summary:
-      + Relational Comparison: if both values are not type String, ToNumber is called on both. This is the same as adding a + in front, which for null coerces to 0.
-      + Equality Comparison: only calls ToNumber on Strings, Numbers, and Booleans.
+  - explained: https://stackoverflow.com/questions/2910495/why-null-0-null-0-but-not-null-0
+  - Summary:
+    - Relational Comparison: if both values are not type String, ToNumber is called on both. This is the same as adding a + in front, which for null coerces to 0.
+    - Equality Comparison: only calls ToNumber on Strings, Numbers, and Booleans.
 
 - Javascript event loop explained
-![JS event loop](https://res.cloudinary.com/practicaldev/image/fetch/s--BLtCLQcd--/c_limit%2Cf_auto%2Cfl_progressive%2Cq_66%2Cw_880/https://devtolydiahallie.s3-us-west-1.amazonaws.com/gif14.1.gif)
+  ![JS event loop](https://res.cloudinary.com/practicaldev/image/fetch/s--BLtCLQcd--/c_limit%2Cf_auto%2Cfl_progressive%2Cq_66%2Cw_880/https://devtolydiahallie.s3-us-west-1.amazonaws.com/gif14.1.gif)
 
   - **Stack** là nơi lưu giữ các con trỏ hàm đang thực hiện,. Khi hàm bắt đầu chạy thì nhảy vào đây, hàm nào xong rồi thì đi ra. Do bản chất `stack` nên thằng nào vào sau sẽ ra trước.
   - **Queue** là hàng đợi sự kiện, mỗi thằng sự kiện mới sẽ chui vào đây, thằng nào vào trước lấy trước. Sự kiện có thể là I/O event, timeout event, interval event, v.v..
   - **Event loop** là 1 thằng chuyên đi nhặt các sự kiện trong hàng đợi (`queue`) để xử lý. Tuy nhiên nó chỉ nhặt khi và chỉ khi `stack` trống.
+
 ## Web security knowledge (HTTPS, TLS, SSL, CORS, CSP)
 
 https://dev.to/ahmedatefae/web-security-knowledge-you-must-understand-it-part-i-https-tls-ssl-cors-csp-298l
@@ -333,6 +369,7 @@ ref:
 - https://kipalog.com/posts/Unicode-la-charset--UTF8--UTF16-la-phuong-thuc-Encode-Decode
 
 ## Network
+
 <b>OSI</b>: Operating system interconnection model
 
 ![](images/osi-model-7-layers.svg 'Osi model simple explained')
@@ -350,10 +387,10 @@ OSI model là gì: https://www.cloudflare.com/learning/ddos/glossary/open-system
 Binance Chain and BSC have a dual-chain architecture with cross-chain compatibility. 2 nền tảng bổ sung cho nhau và có thể chuyển tài sản qua lại giữa các nền tảng
 
 - Compare:
-![](images/BC_BSC.png 'compare BC_BSC')
+  ![](images/BC_BSC.png 'compare BC_BSC')
 
 - Interactive:
-![](images/cross_chain.png 'cross chain')
+  ![](images/cross_chain.png 'cross chain')
 
 ### Blockchain layers (L0, L1, L2, L3) in a Diagram
 
@@ -365,14 +402,17 @@ ref: https://medium.com/@nick.5montana/blockchain-layers-l0-l1-l2-l3-in-a-diagra
 - ERC-20:
 
 docs: https://eips.ethereum.org/EIPS/eip-20
+
 - ERC-721: NFTs
 
 Non-fungible means not completely interchangeable. Không thể hoán đổi hoàn toàn cho nhau.
 
 docs: https://eips.ethereum.org/EIPS/eip-721
+
 - ERC-1155: Có thể được coi là một cải tiến trên cả ERC-721 và ERC-20. Nó tạo ra một tiêu chuẩn hỗ trợ cả token có thể thay thế lẫn nhau và không thể thay thế trong cùng một hợp đồng.
 
 docs: https://eips.ethereum.org/EIPS/eip-1155
+
 - Hỗ trợ cả ERC-20(fugiable) và ERC721(non-fungiable)
 - Cho phép gửi nhiều loại token cùng lúc. đến cùng 1 địa chỉ
 - Cho phép quản lý nhiều loại token trên cùng một smart contract
@@ -406,6 +446,7 @@ interface ERC165 {
  function supportsInterface(bytes4 interfaceID) external view returns (bool);
 }
 ```
+
 Why we need to check contract support an interface or not? => Solidity already provides a way for a contract to call functions from another contract. To make sure the called contract supports a function that you want to call. What we can do is add a validation check.
 
 That is what ERC165 is for — a standard to publish and detect what interfaces a smart contract implements.
@@ -423,22 +464,25 @@ Các lỗ hổng này có thể được attaker khai thác ở các hàm transf
 - `virtual` and `override`: Một hàm chỉ được ghi đè nếu nó được khai báo là `virtual` hoặc được định nghĩa trong `interface` hay `abstract` contract. Khi muốn thay đổi hoặc ghi đè ta sửu dụng từ khóa `overrice`
 
 #### DEFI
+
 Model:
 ![](images/defi-model.png 'Defi model')
 Explain:
--  Bridge: Thông những cái blockchain với nhau. Vì các block chain có nhu cầu giao tiếp với nhau (cross-chain)
+
+- Bridge: Thông những cái blockchain với nhau. Vì các block chain có nhu cầu giao tiếp với nhau (cross-chain)
 - Assets: Tài sản (finace). Tiền…
 - Liquidity Provider: cung cấp thanh khoản cho sàn
 - AMM – DEX: Sàn giao dịch (binance - kubi)
 - Oracle: Cấp dữ liệu vào bộ máy để Dapp hoạt đông (chainLink)
 - Indexer: Ngược lại với Oracle. Đọc dữ liệu từ dapp đưa ra ngoài
-- NFT:  Đưa tài sản thật vào hệ thống để lấy tiền (Giống như đi vay - bán)
+- NFT: Đưa tài sản thật vào hệ thống để lấy tiền (Giống như đi vay - bán)
 - RWA: read world asset
 - Insurance: Bảo hiểm dapp. Có trách nhiệm bảo hiểm
 - Audit: Kiểm tra hợp đồng thông minh. K có trách nhiệm đền bù
 - Predict market: Thị trường tương lai
 
 ##### topic
+
 - lending
 - dexes
 - dericatives
