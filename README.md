@@ -197,6 +197,8 @@ docker run -it -d --restart=always --name myjenkins -p 8080:8080 -p 50000:50000 
 
 ![](images/concurrency-vs-parallelism.png 'concurrency vs. parallelism')
 
+![](images/concurrency-vs-parallelism-compare.png 'concurrency vs. parallelism compare')
+
 ## How concurrency work
 
 Mô hình mô tả cách hoạt động của các thread trong concurrency
@@ -204,6 +206,11 @@ Mô hình mô tả cách hoạt động của các thread trong concurrency
 
 - T1, T2 ... đại diện cho các thread đang chạy trong 1 chương trình đa luồng
 - Khi switch context bước thứ 2 (Lưu context) là nhiệm vụ của thanh ghi `Status Register` đề cập phía trên
+
+## How nodejs handle 10k concurrent request
+
+Ref: - https://stackoverflow.com/questions/34855352/how-in-general-does-node-js-handle-10-000-concurrent-requests
+	 - https://javascript.plainenglish.io/how-many-requests-can-handle-a-real-world-nodejs-server-side-application-55da7a2f06f3
 
 # Network
 
@@ -334,6 +341,19 @@ attacker đành lừa người dùng nhấp vào nút hoặc liên kết trên 1
 
 Hacker nắm trong tay một danh sách rất lớn các username và password phổ biến hay được sử dụng. Sau đó họ gửi liên tục các truy vấn đăng nhập vào trang web, nếu tài khoản nào sai thì bỏ qua và tiếp tục thử lại với tài khoản khác. Cứ lần lượt như vậy sau đó "trộn" mật khẩu đến khi đăng nhập được thì thôi. Đó gọi là Brute force. Phương thức này là 1 cách để dò mật khẩu và tài khoản. Hay được khai thác bởi các website wordpress bởi hình thức tấn công này nhắm vào các mã nguồn thông dụng.
 
+### Elastic search
+
+- **Elasticsearch**: là công cụ tìm kiếm và phân tích phân tán
+
+- **Kibana**: là một nền tảng phân tích hiển thị dữ liệu từ Elasticsearch một cách trực quan dễ sử dụng, cung cấp cho người dùng quản lý như biểu đồ cột, biểu đồ đường,...
+
+- **Filebeat**: là một dịch vụ gửi hàng gọn nhẹ để chuyển tiếp và tập trung dữ liệu logs. Filebeat giám sát các tệp nhật kí hoặc vị trí mà bạn chỉ định, thu thập các sự kiện nhật ký và chuyển tiếp chúng tới `Elasticsearch` hoặc `Logstash` để lập chỉ mục
+
+- **Logstash**: Logstash là một đường dẫn xử lý dữ liệu phía máy chủ, nhập dữ liệu từ nhiều nguồn đồng thời, biến đổi dữ liệu và sau đó gửi dữ liệu đó đến một "kho lưu trữ" như Elasticsearch
+
+- **ELK stack**: Elasticsearch + Logstash + Kibana
+
+![](images/ELK_filebeat.png 'ELK + filebeat')
 ## Web server
 
 ### Nginx
@@ -361,6 +381,10 @@ ref:
 ref:
 
 - https://www.sohamkamani.com/nodejs/rsa-encryption/#rsa-encryption-in-a-nutshell
+
+## Hash
+
+- Hash (crypto.createHash) vs. HMac (crypto.createHmac): HMAC is a keyed hash of data. Mã hóa có key. Secret key cung cấp cho bên tin cậy, thì ta có thể tin rằng chỉ có bên đáng tin cậy (bên giữ key) mới có thể tạo ra chữ ký đó. Hash thường dùng để đảm bảo tính toàn vẹn dữ liệu, dữ liệu không bị thay đổi trên đường truyền. Nếu chỉ hash các field của payload, hacker có thể dò ra thứ tự đúng của các field, sau đó hacker có thể lợi dụng kẽ hở này để gian lận được. Vậy nên thêm secret key vào hash (Hmac) có để đảm bảo hơn dữ liệu chỉ đến từ nguồn đáng tin cậy. Nguồn được chia sẻ key
 
 ## Unicode, UTF-8, UTF-16
 
