@@ -134,6 +134,7 @@ $ docker run -v host_volumes:container_volumes
 - container_volumes: auto create by docker, each container a folder is generated the gets amounted
 - Can reference volumes by name
 
+> Docker uses a client-server architecture. The Docker client talks to the Docker daemon, which does the heavy lifting of building, running, and distributing your Docker containers. The Docker client and daemon can run on the same system, or you can connect a Docker client to a remote Docker daemon. The Docker client and daemon communicate using a REST API, over UNIX sockets or a network interface.
 ## Lưu ý
 
 Mỗi lệnh `RUN` chạy sẽ sinh ra 1 image layer, Nên gom các lệnh `RUN` lại => giảm số lượng imange layer sinh ra => giảm được size, tối ưu hóa thời gian build
@@ -170,6 +171,39 @@ Docker = Immurable Infrastructure + Infrastructure as code
 ```
 docker run -it -d --restart=always --name myjenkins -p 8080:8080 -p 50000:50000 -v jenkins_home:/var/jenkins_home  jenkins/jenkins
 ```
+
+# Gitlab CI/CD
+
+- Gitlab runner: is an application that works with GitLab CI/CD to run jobs in a pipeline.
+
+When you register a runner, you are setting up communication between your GitLab instance and the machine where GitLab Runner is installed.
+Runners usually process jobs on the same machine where you installed GitLab Runner.
+
+- Executors: When you register a runner, you must choose an executor. An executor determines the environment each job runs in.
+When you install GitLab Runner in a Docker container and choose the Docker executor to run your jobs, it’s sometimes referred to as a “Docker-in-Docker” configuration
+
+Sau khi commit code có chứa file `.gitlab-ci.yml` thì quá trình CI/CD được khỏi động. Gitlab sẽ tạo ra 1 pipeline. pineline chính là toàn bộ những gì được viết trong file
+`.gitlab-ci.yml`, pipeline sẽ chứa nhiều jobs, các jobs này sẽ đươc gửi đến các `Gitlab runners`, mỗi con runner sẽ tạo ra 1 môi trường riêng để chạy job và sau khi kết thúc
+thì sẽ trả kết quả lại cho Gitlab
+
+Mặc định Gitlab có nhiều Shared Runners dùng cho tất cả mọi người, chúng ta có thể dùng runner này hoặc có thể cài Gitlab runner về server riêng để build cho nhanh
+### Runner execution flow
+This diagram shows how runners are registered and how jobs are requested and handled
+
+![](images/gitlab-runner-flow.png 'gitlab runner execution flow')
+
+### GitLab CI/CD flow
+
+![](images/gitlab-ci-cd-flow.png 'gitlab ci/cd flow')
+
+### Docker-in-Docker (dind)
+Tại sao phải dùng docker-in-docker
+- Giải thích ngắn gọn
+Trong môi trường `docker:19` mà job chúng ta đang chạy, theo lý thuyết nó có docker, nhưng để chạy được command với docker trong đó thì ta cần 1 container để support đó là `docker:dind` đóng vai trò như kiểu cầu nối giữa `docker-cli` và `docker deamon` (Docker Server) vậy. (`docker-cli` hay còn gọi là Docker Client là thứ mà ta chạy ở command line `docker build`...)
+- Chi tết
+https://gitlab.com/duyquoc1508/gitlab-ci
+![](images/runner-docker-only.png 'Gitlab runner docker only')
+![](images/runner-docker-in-docker.png 'Gitlab runner docker-in-docker')
 
 # System architecture
 
