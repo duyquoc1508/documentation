@@ -176,8 +176,8 @@ docker run -it -d --restart=always --name myjenkins -p 8080:8080 -p 50000:50000 
 
 - Gitlab runner: is an application that works with GitLab CI/CD to run jobs in a pipeline.
 
-When you register a runner, you are setting up communication between your GitLab instance and the machine where GitLab Runner is installed.
-Runners usually process jobs on the same machine where you installed GitLab Runner.
+When you register a runner, you are setting up **communication** between your _GitLab instance_ and the _machine_ where GitLab Runner is installed.
+Runners usually process jobs on the _same machine_ where you installed GitLab Runner.
 
 - Executors: When you register a runner, you must choose an executor. An executor determines the environment each job runs in.
 When you install GitLab Runner in a Docker container and choose the Docker executor to run your jobs, it’s sometimes referred to as a “Docker-in-Docker” configuration
