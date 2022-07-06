@@ -197,10 +197,15 @@ This diagram shows how runners are registered and how jobs are requested and han
 ![](images/gitlab-ci-cd-flow.png 'gitlab ci/cd flow')
 
 ### Docker-in-Docker (dind)
+"Docker-in-Docker" (dind) means:
+
+- Your registered runner uses the Docker executor.
+- The executor uses a container image of Docker, provided by Docker, to run your CI/CD jobs.
+
 Tại sao phải dùng docker-in-docker
 - Giải thích ngắn gọn
 Trong môi trường `docker:19` mà job chúng ta đang chạy, theo lý thuyết nó có docker, nhưng để chạy được command với docker trong đó thì ta cần 1 container để support đó là `docker:dind` đóng vai trò như kiểu cầu nối giữa `docker-cli` và `docker deamon` (Docker Server) vậy. (`docker-cli` hay còn gọi là Docker Client là thứ mà ta chạy ở command line `docker build`...)
-- Chi tết
+- Giải thích chi tiết + demo
 https://gitlab.com/duyquoc1508/gitlab-ci
 ![](images/runner-docker-only.png 'Gitlab runner docker only')
 ![](images/runner-docker-in-docker.png 'Gitlab runner docker-in-docker')
