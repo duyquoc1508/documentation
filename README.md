@@ -40,6 +40,12 @@ It doesn't matter whether you install that package globally or locally. NPX will
 
 <b>E2E | E2EE:</b> End-to-End Encryption: Dữ liệu gửi đi được mã hóa tại điểm cuối của người gửi. Người nhận là người duy nhất có thể giải mã được dữ liệu đó. Server chỉ có nhiệm vụ vận chuyển dữ liệu
 
+<b>CI</b>: Continuous Integration: Là quá trình tự động build, test application một cách tự động dựa vào các scrips đã viết sẵn mỗi khi repository có thay đổi
+
+<b>CD</b>: Continuous Delivery: A step beyond CI. Ứng dụng không chỉ build, test mỗi khi code thay đổi, mà còn deploy liên tục. CD sẽ kiểm tra code 1 cách tự động. Tuy nhiên, phải kích hoạt deploy theo cách thủ công
+
+<b>CD</b>: Continuous Deployment: An another step beyond CI. Tương tự như Continuous Delivery nhưng ứng dụng sẽ được deploy 1 cách tự động. Không có sự can thiệp của con người
+
 <b>Concurrency</b>: Đa luồng là khả năng 1 chương trình có thể **điều phối (dealing)** nhiều tác vụ trong cùng 1 khoảng thời gian và trong quá trình điều phối chỉ cho phép **1 tác vụ chạy trong 1 thời điểm**
 
 <b>Parallelism</b>: Là khả năng 1 chương trình có thể **thực thi (doing)** 2 hoặc nhiều task trong **cùng một thời điểm** với điều kiện cpu phải có từ 2 core trở lên
@@ -249,7 +255,44 @@ Mô hình mô tả cách hoạt động của các thread trong concurrency
 ## How nodejs handle 10k concurrent request
 
 Ref: - https://stackoverflow.com/questions/34855352/how-in-general-does-node-js-handle-10-000-concurrent-requests
-	 - https://javascript.plainenglish.io/how-many-requests-can-handle-a-real-world-nodejs-server-side-application-55da7a2f06f3
+	   - https://javascript.plainenglish.io/how-many-requests-can-handle-a-real-world-nodejs-server-side-application-55da7a2f06f3
+
+# Node.js
+Ref: https://www.freecodecamp.org/news/do-you-want-a-better-understanding-of-buffer-in-node-js-check-this-out-2e29de2968e8/
+
+## Stream
+Stream trong node.js là một chuỗi dữ liệu được di chuyển từ điểm này đến điểm khác theo thời gian.
+Khái niệm này phát sinh khi bạn có 1 lượng lớn dữ liệu cần phải xử lý, nhưng bạn không cần phải đợi tất cả dữ liệu có sẵn rồi mới bắt đầu xử lý. (memory efficiency + time efficiency)
+
+## Binary data
+Máy tính lưu trữ và biểu diễn dữ liệu trong các tệp nhị phân. Để lưu trữ hoặc biểu diễn dữ liệu, máy tính cần chuyển đổi dữ liệu đó sang dạng biểu diễn nhị phân của nó.
+Máy tính biết cách biểu diễn các dữ liệu number, strings, images, videos... dưới dạng nhị phân dựa vào **character sets** và **character encoding**
+Ví dụ: Ký tự (L) > "L".chartCodeAt(0) = 97 (dựa vào character sets (unicode)) > biểu diễn nhị phân là (01001100) (dựa vào charater encoding)
+
+### Character sets
+Xác định quy tắc về 1 số đại diện cho 1 kí tự nào. Những bộ kí tự phổ biến **Unicode**, **ASCII**. Javascript hoạt động tốt với bộ mã Unicode
+
+### Character encoding
+Chứa các quy tắc cách số đó nên được biểu diễn trong các mã nhị phân, cụ thể là dùng bao nhiêu bit để biểu diễn số.
+Một trong những định nghĩa cho mã hóa kí tự là **UTF-8**. UTF-8 định nghĩa rằng các kí tự phải được mã hóa theo byte. Một byte là tập hợp 8 bits.
+
+Ví dụ: biểu diễn nhị phân của số 12 là 1100. UTF-8 nói rằng số 12 phải ở 8 bits, nếu số được biểu diễn chưa đủ thì máy tính cần thêm các bit 0 vào bên trái của biểu diễn nhị phân
+để nó trở thành 1 byte, vì vậy 12 nên được biểu diễn là 00001100.
+
+Tương tự như vậy, máy tính cũng có các quy tắc cụ thể về cách hình ảnh và video nên được chuyển đổi hoặc mã hóa và lưu trữ dưới trong các tệp nhị phân.
+
+## Buffer
+Lớp buffer được giới thiệu như 1 phần của API node.js để giúp nó có thể thao tác hoặc tương tác với các luồng dữ liệu nhị phân
+Một luồng di chuyển dữ liệu (stream) là sự di chuyển dữ liệu từ điểm này sang điểm khác, sự di chuyển dữ liệu thường với mục đích xử lý hoặc đọc nó và đưa ra quyết định dựa trên nó.
+Nhưng có 1 lượng dữ liệu **tối thiểu** và **tối đa** mà một quá trình có thể mất theo thời gian. Vì vậy nếu tốc độ dữ liệu tới **nhanh hơn** tốt độ xử lý dữ liệu thì dữ liệu thừa cần phải đợi
+ở đâu đó để tới lượt nó được xử lý. Mặc khác, nếu tốc độ dữ liệu đến **chậm hơn** quá trình xử lý dữ liệu, thì một số ít dữ liệu đến sớm hơn cần phải 1 đợi lượng dữ liệu đến nữa để nó được xử lý.
+Nơi dữ liệu chờ xử lý được gọi là **buffer**. Đó là 1 vị trí nhỏ trong máy tính, thường là trong RAM, nơi dữ liệu tạm thời được thu thập, chờ đợi và cuối cùng được gửi đi để xử lý.
+
+Ví dụ: Chúng ta coi toàn bộ stream và buffer process như là 1 trạm xe bus. Xe bus không được phép khởi hành cho đến khi có một lượng khách nhất định (tối thiểu) hoặc đến đến một giờ khởi hành cụ thể.
+Hành khách có thể đên vào các thời điểm khác nhau với tốc độ khác nhau. Hành khách và bến xe đều không kiểm soát được việc hành khác đến bến. Trong mọi trường hợp những hành khách đến sớm sẽ phải đợi
+cho đên khi xe bus không đủ số lượng hành khách tối thiểu để khởi hành hoặc khi xe đã khởi hành thì phải đợi chuyến khác.
+
+Ví dụ điển hình để cho thấy cách hoạt động của buffer. Nếu internet đủ nhanh, tốc độ của stream đủ nhanh để lấp đầy buffer ngay lập tức và gửi nó ra ngoài để xử lý, video sẽ được phát thuận lơi đến khi kết thúc. Nhưng nếu kết nối chậm lúc đó sẽ hiện chữ "loading..." hoặc "buffering..." có nghĩa là đang thu thập thêm dữ liêu hoặc chờ dữ liệu đến khi buffer được lấp đầy để xử lý
 
 # Network
 
