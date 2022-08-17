@@ -170,6 +170,47 @@ Docker = Immurable Infrastructure + Infrastructure as code
 
 ![](images/docker-host-error.png 'docker error because host')
 
+# Kubernestes
+Ref: https://medium.com/google-cloud/kubernetes-101-pods-nodes-containers-and-clusters-c1509e409e16
+
+## Hardware
+### Nodes
+![](images/kubernestes-node.png 'kubernestes node')
+
+Nodes is a concept of hardware. A node is the smallest unit of computing hardware in Kubernestes. It is a representation of a single machine in cluster. In most production system, a node will likely be either a physical machine in a datacenter or virtual machine hosted on a clound.
+Thinking of a machine as a "node" allow us to insert a layer of abstraction. Now, instead of worrying about the unique characteristics of individual machine, we can simply view each machine as a set of CPU and RAM resource that can be utilized. In this way, any machine can substitute any other machine in kubernetes cluster
+
+### Clusters
+![](images/kubernestes-cluster.png 'kubernestes cluster')
+
+Although working with individual nodes can be useful, it's not the Kubernetes way. In general, you should think about cluster as a whole, instead worrying about the state of individual nodes.
+In kubernetes, nodes pool together their resource to form a powerful machine. When program deployed onto cluster, it intelligently handles distributing work to the individual nodes for you. If any nodes are added or removed, the cluster will shift around work as necessary. It shouldn't matter to program, our the programmer, wich individual machines are actually running the code
+
+### Persistent Volumes
+![](images/kubernestes-persistent-volume.png 'kubernestes persisten volume')
+
+Because programs running on your cluster aren't guaranteed to run on a specific node, data can't be saved to any arbitrary in the file system. If a program tries to save data to a file for later, but is then relocated onto a new node, the file will no longer be where the program expects it to be. To store data permanently, Kubernetes uses Presistent Volumes. Presistent Volumes provide a file system that can be mounted to the cluster, without being associated with any particular node.
+
+## Software
+### Containers
+![](images/kubernestes-container.png 'kubernestes container')
+
+Programs running on k8s are packaged as Linux Container. Containerization allows you create self-contained Linux execution environments. Any program and all its dependencies can be bundled up into a single file.
+### Pods
+![](images/kubernestes-pods.png 'kubernestes pods')
+
+Kubernetes doesn't run containers directly, instead it wraps one or more containers onto a higher-level structure called a **pod**. Any containers in the same pod will share the same resource an local network. Container can easily communicate with other container in the same pod as though they were on the same machine while maintaining a degree of isolation from others.
+
+Pods are used as the unit of replication in Kubernetes. If you want to have multiple copies of a pod running at any time in a production system, Kubernetes can be configured to deploy new replica of your pod to the cluster as necessary.
+
+Pods can hold multiple containers, but you should limit it when possible. Because pods are scale up and down as a unit, all container in a pod must scale together, regardless of their container need. This leads to wasted resources and an expensive bill.
+
+### Deployment
+![](images/kubernestes-deployment.png 'kubernestes deployment')
+
+Although pods are the basic unit of computation in K8s. They are not typically directly launched on a cluster. Instead, pods are usually managed by one more layer of abstraction: **Deployment**
+
+
 # Jenkins
 
 1. Run jenkins and keep start automatically when Docker daemon restarts
@@ -275,6 +316,7 @@ Xác định quy tắc về 1 số đại diện cho 1 kí tự nào. Những b�
 ### Character encoding
 Chứa các quy tắc cách số đó nên được biểu diễn trong các mã nhị phân, cụ thể là dùng bao nhiêu bit để biểu diễn số.
 Một trong những định nghĩa cho mã hóa kí tự là **UTF-8**. UTF-8 định nghĩa rằng các kí tự phải được mã hóa theo byte. Một byte là tập hợp 8 bits.
+Để tham chiếu đến các kí tự một cách rõ ràng, mỗi kí tự được liên kết với 1 số được gọi là 1 **code point**
 
 Ví dụ: biểu diễn nhị phân của số 12 là 1100. UTF-8 nói rằng số 12 phải ở 8 bits, nếu số được biểu diễn chưa đủ thì máy tính cần thêm các bit 0 vào bên trái của biểu diễn nhị phân
 để nó trở thành 1 byte, vì vậy 12 nên được biểu diễn là 00001100.
@@ -289,8 +331,8 @@ Nhưng có 1 lượng dữ liệu **tối thiểu** và **tối đa** mà một 
 Nơi dữ liệu chờ xử lý được gọi là **buffer**. Đó là 1 vị trí nhỏ trong máy tính, thường là trong RAM, nơi dữ liệu tạm thời được thu thập, chờ đợi và cuối cùng được gửi đi để xử lý.
 
 Ví dụ: Chúng ta coi toàn bộ stream và buffer process như là 1 trạm xe bus. Xe bus không được phép khởi hành cho đến khi có một lượng khách nhất định (tối thiểu) hoặc đến đến một giờ khởi hành cụ thể.
-Hành khách có thể đên vào các thời điểm khác nhau với tốc độ khác nhau. Hành khách và bến xe đều không kiểm soát được việc hành khác đến bến. Trong mọi trường hợp những hành khách đến sớm sẽ phải đợi
-cho đên khi xe bus không đủ số lượng hành khách tối thiểu để khởi hành hoặc khi xe đã khởi hành thì phải đợi chuyến khác.
+Hành khách có thể đến vào các thời điểm khác nhau với tốc độ khác nhau. Hành khách và bến xe đều không kiểm soát được việc hành khác đến bến. Trong mọi trường hợp những hành khách đến sớm sẽ phải đợi
+cho đên khi xe bus đủ số lượng hành khách tối thiểu để khởi hành hoặc khi xe đã khởi hành thì phải đợi chuyến khác.
 
 Ví dụ điển hình để cho thấy cách hoạt động của buffer. Nếu internet đủ nhanh, tốc độ của stream đủ nhanh để lấp đầy buffer ngay lập tức và gửi nó ra ngoài để xử lý, video sẽ được phát thuận lơi đến khi kết thúc. Nhưng nếu kết nối chậm lúc đó sẽ hiện chữ "loading..." hoặc "buffering..." có nghĩa là đang thu thập thêm dữ liêu hoặc chờ dữ liệu đến khi buffer được lấp đầy để xử lý
 
