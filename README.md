@@ -1,5 +1,79 @@
 # Some keyword should know
 
+- [Some keyword should know](#some-keyword-should-know)
+  - [Abbreviation keywords](#abbreviation-keywords)
+- [REST APIs standard](#rest-apis-standard)
+- [Docker](#docker)
+  - [Lưu ý](#lưu-ý)
+  - [Các khái niệm liên quan](#các-khái-niệm-liên-quan)
+    - [Murable Infrastructure:](#murable-infrastructure)
+    - [Immurable Infrastructure](#immurable-infrastructure)
+    - [Infrastructure as code (code: dockerfile)](#infrastructure-as-code-code-dockerfile)
+    - [Các lỗi hay gặp với docker](#các-lỗi-hay-gặp-với-docker)
+- [Kubernestes](#kubernestes)
+  - [Hardware](#hardware)
+    - [Nodes](#nodes)
+    - [Clusters](#clusters)
+    - [Persistent Volumes](#persistent-volumes)
+  - [Software](#software)
+    - [Containers](#containers)
+    - [Pods](#pods)
+    - [Deployment](#deployment)
+- [Jenkins](#jenkins)
+- [Gitlab CI/CD](#gitlab-cicd)
+    - [Runner execution flow](#runner-execution-flow)
+    - [GitLab CI/CD flow](#gitlab-cicd-flow)
+    - [Docker-in-Docker (dind)](#docker-in-docker-dind)
+- [System architecture](#system-architecture)
+  - [Process vs. Thread](#process-vs-thread)
+    - [Key difference](#key-difference)
+  - [Concurrency vs. Parallelism](#concurrency-vs-parallelism)
+    - [Key difference](#key-difference-1)
+  - [How concurrency work](#how-concurrency-work)
+  - [How nodejs handle 10k concurrent request](#how-nodejs-handle-10k-concurrent-request)
+- [Node.js](#nodejs)
+  - [Stream](#stream)
+  - [Binary data](#binary-data)
+    - [Character sets](#character-sets)
+    - [Character encoding](#character-encoding)
+  - [Buffer](#buffer)
+- [Network](#network)
+  - [Ping](#ping)
+  - [Telnet](#telnet)
+  - [OSI model](#osi-model)
+- [Git](#git)
+- [Google Search Skills](#google-search-skills)
+- [Javascript](#javascript)
+- [Web security knowledge (HTTPS, TLS, SSL, CORS, CSP)](#web-security-knowledge-https-tls-ssl-cors-csp)
+    - [HTTPS](#https)
+    - [Mã hóa API](#mã-hóa-api)
+    - [TLS (Transport Layer Security)](#tls-transport-layer-security)
+    - [SSL (Secure Sockets Layer)](#ssl-secure-sockets-layer)
+    - [What is the difference between TLS and SSL?](#what-is-the-difference-between-tls-and-ssl)
+    - [CORS (Cross-origin resource sharing)](#cors-cross-origin-resource-sharing)
+    - [CSP (Content Security Policy)](#csp-content-security-policy)
+    - [Set Access-Control-Allow-Origin header.](#set-access-control-allow-origin-header)
+    - [XSS (Cross-Site Scripting)](#xss-cross-site-scripting)
+    - [Data injection attacks](#data-injection-attacks)
+    - [Click jacking || UI redress attack (Tấn công chỉnh sửa giao diện người dùng)](#click-jacking--ui-redress-attack-tấn-công-chỉnh-sửa-giao-diện-người-dùng)
+    - [Brute Force Attack](#brute-force-attack)
+- [Elastic search](#elastic-search)
+- [Web server](#web-server)
+  - [Nginx](#nginx)
+  - [Phân biệt Web Server vs. Application Server](#phân-biệt-web-server-vs-application-server)
+  - [Mã hóa và giải mã đường truyền](#mã-hóa-và-giải-mã-đường-truyền)
+  - [Hash](#hash)
+  - [Unicode, UTF-8, UTF-16](#unicode-utf-8-utf-16)
+- [Blockchain](#blockchain)
+  - [Binance chain vs Binance smart chain architecture](#binance-chain-vs-binance-smart-chain-architecture)
+    - [Blockchain layers (L0, L1, L2, L3) in a Diagram](#blockchain-layers-l0-l1-l2-l3-in-a-diagram)
+    - [Smart Contract](#smart-contract)
+      - [Interfaces](#interfaces)
+      - [ERC 165](#erc-165)
+      - [DEFI](#defi)
+
+## Abbreviation keywords
+
 <b>NPM</b>: Manages packages, you can install node.js packages, but doesn't make life easy executing any.
 
 <b>NPX</b>: A tool for executing Node packages.
@@ -32,6 +106,8 @@ It doesn't matter whether you install that package globally or locally. NPX will
 
 <b>CDN:</b> Content delivery network
 
+<b>OSI</b>: Operating system interconnection model
+
 <b>ERC:</b> Amazon Elastic Container Registry: là 1 private docker registry của Amazon. Dockerhub là 1 public docker registry. Docker registry là nới để host các image
 
 <b>CCU:</b> Concurrent users (số lượng user đang hoạt động cùng một thời điểm)
@@ -61,22 +137,6 @@ Có 3 loại deep link:
 - Basic deep link
 - Deferred deep link
 - Contextual deep link
-
-#### Set Access-Control-Allow-Origin header.
-
-Đây là header được <b>server trả về</b> để báo cho trình duyệt biết: "Tao chỉ cho phép trang web có domain này gọi đến tao thôi". Phương thức lưu giữ phiên đăng nhập sử dụng cookie sẽ có đặc điểm của cookie đó là tự gắn cookie vào request khi gọi tới domain gốc. Do vậy nếu bạn vào trang web fakezalo.com, trang web này hoàn toàn có thể gọi lên API của Zalo để lấy thông tin người dùng đang đăng nhập hiện tại của bạn (do khi gọi API của Zalo sẽ tự có cookie của Zalo). Access-Control-Allow-Origin header sinh ra là để phòng chống việc này.
-
-#### Mã hóa API
-
-Mặc dù HTTPS là giao thức HTTP đi kèm mã hóa đầu cuối để phòng chống MITM. Tuy nhiên các dev thấy đây vẫn là chưa đủ, và họ đã đi thêm 1 bước nữa trên con đường phòng chống những kẻ tò mò.
-Chung quy lại là phương pháp này bao gồm các bước:
-
-1. Tạo 1 Secret Key trên server.
-2. Chia sẻ Secret Key giữa client và server (Qua fix cứng trong code, file config, API).
-3. Dùng Secret Key với mã hóa AES (hoặc bất kỳ thuật toán mã hóa tin cậy nào đó) mã hóa response trả về từ server.
-4. Dùng Secret Key để giải mã trở lại lấy thông tin từ Response.
-
-Về cơ bản thì nó không khác gì concept của HTTPS, tức là mã hóa và giải mã đầu cuối để người ở giữa không đọc được. Cái khác ở đây chính là HTTPS được trình duyệt thực hiện tự động, còn mã hóa API ta phải tự thực hiện trong code client.
 
 # REST APIs standard
 
@@ -141,6 +201,7 @@ $ docker run -v host_volumes:container_volumes
 - Can reference volumes by name
 
 > Docker uses a client-server architecture. The Docker client talks to the Docker daemon, which does the heavy lifting of building, running, and distributing your Docker containers. The Docker client and daemon can run on the same system, or you can connect a Docker client to a remote Docker daemon. The Docker client and daemon communicate using a REST API, over UNIX sockets or a network interface.
+
 ## Lưu ý
 
 Mỗi lệnh `RUN` chạy sẽ sinh ra 1 image layer, Nên gom các lệnh `RUN` lại => giảm số lượng imange layer sinh ra => giảm được size, tối ưu hóa thời gian build
@@ -171,32 +232,41 @@ Docker = Immurable Infrastructure + Infrastructure as code
 ![](images/docker-host-error.png 'docker error because host')
 
 # Kubernestes
+
 Ref: https://medium.com/google-cloud/kubernetes-101-pods-nodes-containers-and-clusters-c1509e409e16
 
 ## Hardware
+
 ### Nodes
+
 ![](images/kubernestes-node.png 'kubernestes node')
 
 Nodes is a concept of hardware. A node is the smallest unit of computing hardware in Kubernestes. It is a representation of a single machine in cluster. In most production system, a node will likely be either a physical machine in a datacenter or virtual machine hosted on a clound.
 Thinking of a machine as a "node" allow us to insert a layer of abstraction. Now, instead of worrying about the unique characteristics of individual machine, we can simply view each machine as a set of CPU and RAM resource that can be utilized. In this way, any machine can substitute any other machine in kubernetes cluster
 
 ### Clusters
+
 ![](images/kubernestes-cluster.png 'kubernestes cluster')
 
 Although working with individual nodes can be useful, it's not the Kubernetes way. In general, you should think about cluster as a whole, instead worrying about the state of individual nodes.
 In kubernetes, nodes pool together their resource to form a powerful machine. When program deployed onto cluster, it intelligently handles distributing work to the individual nodes for you. If any nodes are added or removed, the cluster will shift around work as necessary. It shouldn't matter to program, our the programmer, wich individual machines are actually running the code
 
 ### Persistent Volumes
+
 ![](images/kubernestes-persistent-volume.png 'kubernestes persisten volume')
 
 Because programs running on your cluster aren't guaranteed to run on a specific node, data can't be saved to any arbitrary in the file system. If a program tries to save data to a file for later, but is then relocated onto a new node, the file will no longer be where the program expects it to be. To store data permanently, Kubernetes uses Presistent Volumes. Presistent Volumes provide a file system that can be mounted to the cluster, without being associated with any particular node.
 
 ## Software
+
 ### Containers
+
 ![](images/kubernestes-container.png 'kubernestes container')
 
 Programs running on k8s are packaged as Linux Container. Containerization allows you create self-contained Linux execution environments. Any program and all its dependencies can be bundled up into a single file.
+
 ### Pods
+
 ![](images/kubernestes-pods.png 'kubernestes pods')
 
 Kubernetes doesn't run containers directly, instead it wraps one or more containers onto a higher-level structure called a **pod**. Any containers in the same pod will share the same resource an local network. Container can easily communicate with other container in the same pod as though they were on the same machine while maintaining a degree of isolation from others.
@@ -206,10 +276,10 @@ Pods are used as the unit of replication in Kubernetes. If you want to have mult
 Pods can hold multiple containers, but you should limit it when possible. Because pods are scale up and down as a unit, all container in a pod must scale together, regardless of their container need. This leads to wasted resources and an expensive bill.
 
 ### Deployment
+
 ![](images/kubernestes-deployment.png 'kubernestes deployment')
 
 Although pods are the basic unit of computation in K8s. They are not typically directly launched on a cluster. Instead, pods are usually managed by one more layer of abstraction: **Deployment**
-
 
 # Jenkins
 
@@ -227,14 +297,16 @@ When you register a runner, you are setting up **communication** between your _G
 Runners usually process jobs on the _same machine_ where you installed GitLab Runner.
 
 - Executors: When you register a runner, you must choose an executor. An executor determines the environment each job runs in.
-When you install GitLab Runner in a Docker container and choose the Docker executor to run your jobs, it’s sometimes referred to as a “Docker-in-Docker” configuration
+  When you install GitLab Runner in a Docker container and choose the Docker executor to run your jobs, it’s sometimes referred to as a “Docker-in-Docker” configuration
 
 Sau khi commit code có chứa file `.gitlab-ci.yml` thì quá trình CI/CD được khỏi động. Gitlab sẽ tạo ra 1 pipeline. pineline chính là toàn bộ những gì được viết trong file
 `.gitlab-ci.yml`, pipeline sẽ chứa nhiều jobs, các jobs này sẽ đươc gửi đến các `Gitlab runners`, mỗi con runner sẽ tạo ra 1 môi trường riêng để chạy job và sau khi kết thúc
 thì sẽ trả kết quả lại cho Gitlab
 
 Mặc định Gitlab có nhiều Shared Runners dùng cho tất cả mọi người, chúng ta có thể dùng runner này hoặc có thể cài Gitlab runner về server riêng để build cho nhanh
+
 ### Runner execution flow
+
 This diagram shows how runners are registered and how jobs are requested and handled
 
 ![](images/gitlab-runner-flow.png 'gitlab runner execution flow')
@@ -244,18 +316,20 @@ This diagram shows how runners are registered and how jobs are requested and han
 ![](images/gitlab-ci-cd-flow.png 'gitlab ci/cd flow')
 
 ### Docker-in-Docker (dind)
+
 "Docker-in-Docker" (dind) means:
 
 - Your registered runner uses the Docker executor.
 - The executor uses a container image of Docker, provided by Docker, to run your CI/CD jobs.
 
 Tại sao phải dùng docker-in-docker
+
 - Giải thích ngắn gọn
-Trong môi trường `docker:19` mà job chúng ta đang chạy, theo lý thuyết nó có docker, nhưng để chạy được command với docker trong đó thì ta cần 1 container để support đó là `docker:dind` đóng vai trò như kiểu cầu nối giữa `docker-cli` và `docker deamon` (Docker Server) vậy. (`docker-cli` hay còn gọi là Docker Client là thứ mà ta chạy ở command line `docker build`...)
+  Trong môi trường `docker:19` mà job chúng ta đang chạy, theo lý thuyết nó có docker, nhưng để chạy được command với docker trong đó thì ta cần 1 container để support đó là `docker:dind` đóng vai trò như kiểu cầu nối giữa `docker-cli` và `docker deamon` (Docker Server) vậy. (`docker-cli` hay còn gọi là Docker Client là thứ mà ta chạy ở command line `docker build`...)
 - Giải thích chi tiết + demo
-https://gitlab.com/duyquoc1508/gitlab-ci
-![](images/runner-docker-only.png 'Gitlab runner docker only')
-![](images/runner-docker-in-docker.png 'Gitlab runner docker-in-docker')
+  https://gitlab.com/duyquoc1508/gitlab-ci
+  ![](images/runner-docker-only.png 'Gitlab runner docker only')
+  ![](images/runner-docker-in-docker.png 'Gitlab runner docker-in-docker')
 
 # System architecture
 
@@ -295,25 +369,29 @@ Mô hình mô tả cách hoạt động của các thread trong concurrency
 
 ## How nodejs handle 10k concurrent request
 
-Ref: - https://stackoverflow.com/questions/34855352/how-in-general-does-node-js-handle-10-000-concurrent-requests
-	   - https://javascript.plainenglish.io/how-many-requests-can-handle-a-real-world-nodejs-server-side-application-55da7a2f06f3
+Ref: - https://stackoverflow.com/questions/34855352/how-in-general-does-node-js-handle-10-000-concurrent-requests - https://javascript.plainenglish.io/how-many-requests-can-handle-a-real-world-nodejs-server-side-application-55da7a2f06f3
 
 # Node.js
+
 Ref: https://www.freecodecamp.org/news/do-you-want-a-better-understanding-of-buffer-in-node-js-check-this-out-2e29de2968e8/
 
 ## Stream
+
 Stream trong node.js là một chuỗi dữ liệu được di chuyển từ điểm này đến điểm khác theo thời gian.
 Khái niệm này phát sinh khi bạn có 1 lượng lớn dữ liệu cần phải xử lý, nhưng bạn không cần phải đợi tất cả dữ liệu có sẵn rồi mới bắt đầu xử lý. (memory efficiency + time efficiency)
 
 ## Binary data
+
 Máy tính lưu trữ và biểu diễn dữ liệu trong các tệp nhị phân. Để lưu trữ hoặc biểu diễn dữ liệu, máy tính cần chuyển đổi dữ liệu đó sang dạng biểu diễn nhị phân của nó.
 Máy tính biết cách biểu diễn các dữ liệu number, strings, images, videos... dưới dạng nhị phân dựa vào **character sets** và **character encoding**
 Ví dụ: Ký tự (L) > "L".chartCodeAt(0) = 97 (dựa vào character sets (unicode)) > biểu diễn nhị phân là (01001100) (dựa vào charater encoding)
 
 ### Character sets
+
 Xác định quy tắc về 1 số đại diện cho 1 kí tự nào. Những bộ kí tự phổ biến **Unicode**, **ASCII**. Javascript hoạt động tốt với bộ mã Unicode
 
 ### Character encoding
+
 Chứa các quy tắc cách số đó nên được biểu diễn trong các mã nhị phân, cụ thể là dùng bao nhiêu bit để biểu diễn số.
 Một trong những định nghĩa cho mã hóa kí tự là **UTF-8**. UTF-8 định nghĩa rằng các kí tự phải được mã hóa theo byte. Một byte là tập hợp 8 bits.
 Để tham chiếu đến các kí tự một cách rõ ràng, mỗi kí tự được liên kết với 1 số được gọi là 1 **code point**
@@ -324,6 +402,7 @@ Ví dụ: biểu diễn nhị phân của số 12 là 1100. UTF-8 nói rằng s�
 Tương tự như vậy, máy tính cũng có các quy tắc cụ thể về cách hình ảnh và video nên được chuyển đổi hoặc mã hóa và lưu trữ dưới trong các tệp nhị phân.
 
 ## Buffer
+
 Lớp buffer được giới thiệu như 1 phần của API node.js để giúp nó có thể thao tác hoặc tương tác với các luồng dữ liệu nhị phân
 Một luồng di chuyển dữ liệu (stream) là sự di chuyển dữ liệu từ điểm này sang điểm khác, sự di chuyển dữ liệu thường với mục đích xử lý hoặc đọc nó và đưa ra quyết định dựa trên nó.
 Nhưng có 1 lượng dữ liệu **tối thiểu** và **tối đa** mà một quá trình có thể mất theo thời gian. Vì vậy nếu tốc độ dữ liệu tới **nhanh hơn** tốt độ xử lý dữ liệu thì dữ liệu thừa cần phải đợi
@@ -345,6 +424,12 @@ Ping là 1 phần của ICMP (Internet Control Message Protocol) được sử d
 ## Telnet
 
 Telnet là một chương trình TCP/IP. Cho phép chúng ta kết nối với máy tính từ xa trên **một cổng cụ thể**. Khi kết nối, nó lấy deamon đang chạy trên cổng đó.
+
+## OSI model
+
+![](images/osi-model-7-layers.svg 'Osi model simple explained')
+
+OSI model là gì: https://www.cloudflare.com/learning/ddos/glossary/open-systems-interconnection-model-osi/
 
 # Git
 
@@ -396,7 +481,7 @@ git mv BlackList.sol Blaclist.sol
 
     `[TừKhóa1 TừKhóa2 intext:TừKhóa3]`
 
-## Javascript
+# Javascript
 
 - JS array vs object vs map
 
@@ -417,13 +502,25 @@ git mv BlackList.sol Blaclist.sol
   - **Queue** là hàng đợi sự kiện, mỗi thằng sự kiện mới sẽ chui vào đây, thằng nào vào trước lấy trước. Sự kiện có thể là I/O event, timeout event, interval event, v.v..
   - **Event loop** là 1 thằng chuyên đi nhặt các sự kiện trong hàng đợi (`queue`) để xử lý. Tuy nhiên nó chỉ nhặt khi và chỉ khi `stack` trống.
 
-## Web security knowledge (HTTPS, TLS, SSL, CORS, CSP)
+# Web security knowledge (HTTPS, TLS, SSL, CORS, CSP)
 
 https://dev.to/ahmedatefae/web-security-knowledge-you-must-understand-it-part-i-https-tls-ssl-cors-csp-298l
 
 ### HTTPS
 
 The secure version of HTTP, It uses encryption communication protocol, named Transport Layer Security (TLS), was known as Secure Sockets Layer (SSL).
+
+### Mã hóa API
+
+Mặc dù HTTPS là giao thức HTTP đi kèm mã hóa đầu cuối để phòng chống MITM. Tuy nhiên các dev thấy đây vẫn là chưa đủ, và họ đã đi thêm 1 bước nữa trên con đường phòng chống những kẻ tò mò.
+Chung quy lại là phương pháp này bao gồm các bước:
+
+1. Tạo 1 Secret Key trên server.
+2. Chia sẻ Secret Key giữa client và server (Qua fix cứng trong code, file config, API).
+3. Dùng Secret Key với mã hóa AES (hoặc bất kỳ thuật toán mã hóa tin cậy nào đó) mã hóa response trả về từ server.
+4. Dùng Secret Key để giải mã trở lại lấy thông tin từ Response.
+
+Về cơ bản thì nó không khác gì concept của HTTPS, tức là mã hóa và giải mã đầu cuối để người ở giữa không đọc được. Cái khác ở đây chính là HTTPS được trình duyệt thực hiện tự động, còn mã hóa API ta phải tự thực hiện trong code client.
 
 ### TLS (Transport Layer Security)
 
@@ -449,23 +546,27 @@ lớp bảo mật hơn giúp phát hiện và giảm thiểu các loại tấn c
 
 CSP sử dụng khái niệm Directives mà mọi Chỉ thị phải chỉ định tài nguyên có thể tải từ đâu, ngăn trình duyệt tải dữ liệu từ bất kỳ vị trí nào khác.
 
-#### XSS (Cross-Site Scripting)
+### Set Access-Control-Allow-Origin header.
+
+Đây là header được <b>server trả về</b> để báo cho trình duyệt biết: "Tao chỉ cho phép trang web có domain này gọi đến tao thôi". Phương thức lưu giữ phiên đăng nhập sử dụng cookie sẽ có đặc điểm của cookie đó là tự gắn cookie vào request khi gọi tới domain gốc. Do vậy nếu bạn vào trang web fakezalo.com, trang web này hoàn toàn có thể gọi lên API của Zalo để lấy thông tin người dùng đang đăng nhập hiện tại của bạn (do khi gọi API của Zalo sẽ tự có cookie của Zalo). Access-Control-Allow-Origin header sinh ra là để phòng chống việc này.
+
+### XSS (Cross-Site Scripting)
 
 Lỗ hổng cho phép hacker chèn script vào trang web để client thự thi nó để lấy các dữ liệu nhạy cảm như cookie, session’s info and site-specific information. Vì web-app không sử dụng đủ các phương thức xác thực và mã hóa. trình duyệt của người dùng thì không thể phát hiện ra 1 đoạn script người dùng chèn vào có nguy hiểm hay không
 
-#### Data injection attacks
+### Data injection attacks
 
 là một mã được được đưa vào mạng. mã này lấy tất cả thông tin từ database đến kẻ tấn công. SQL injection là một loại
 
-#### Click jacking || UI redress attack (Tấn công chỉnh sửa giao diện người dùng)
+### Click jacking || UI redress attack (Tấn công chỉnh sửa giao diện người dùng)
 
 attacker đành lừa người dùng nhấp vào nút hoặc liên kết trên 1 trang khác sử dụng nhiều lớp trong suốt. có thể redirect tới các trang mà người dùng không mong muôn
 
-#### Brute Force Attack
+### Brute Force Attack
 
 Hacker nắm trong tay một danh sách rất lớn các username và password phổ biến hay được sử dụng. Sau đó họ gửi liên tục các truy vấn đăng nhập vào trang web, nếu tài khoản nào sai thì bỏ qua và tiếp tục thử lại với tài khoản khác. Cứ lần lượt như vậy sau đó "trộn" mật khẩu đến khi đăng nhập được thì thôi. Đó gọi là Brute force. Phương thức này là 1 cách để dò mật khẩu và tài khoản. Hay được khai thác bởi các website wordpress bởi hình thức tấn công này nhắm vào các mã nguồn thông dụng.
 
-### Elastic search
+# Elastic search
 
 - **Elasticsearch**: là công cụ tìm kiếm và phân tích phân tán
 
@@ -478,9 +579,10 @@ Hacker nắm trong tay một danh sách rất lớn các username và password p
 - **ELK stack**: Elasticsearch + Logstash + Kibana
 
 ![](images/ELK_filebeat.png 'ELK + filebeat')
-## Web server
 
-### Nginx
+# Web server
+
+## Nginx
 
 Đóng vai trò như một cổng kết nối giữa internet và back-end
 
@@ -516,15 +618,7 @@ ref:
 
 - https://kipalog.com/posts/Unicode-la-charset--UTF8--UTF16-la-phuong-thuc-Encode-Decode
 
-## Network
-
-<b>OSI</b>: Operating system interconnection model
-
-![](images/osi-model-7-layers.svg 'Osi model simple explained')
-
-OSI model là gì: https://www.cloudflare.com/learning/ddos/glossary/open-systems-interconnection-model-osi/
-
-## Blockchain
+# Blockchain
 
 ## Binance chain vs Binance smart chain architecture
 
@@ -629,7 +723,7 @@ Explain:
 - Audit: Kiểm tra hợp đồng thông minh. K có trách nhiệm đền bù
 - Predict market: Thị trường tương lai
 
-##### topic
+Topic:
 
 - lending
 - dexes
