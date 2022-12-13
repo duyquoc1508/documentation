@@ -108,6 +108,9 @@ It doesn't matter whether you install that package globally or locally. NPX will
 
 <b>OSI</b>: Operating system interconnection model
 
+<b>gRPC</b>: Remote Procedure Call: là 1 giao thức request-response, thường được dùng để giao tiếp server-server, thường thấy trong kiến trúc microservices. gRPC sử dụng binary để truyền đi
+thay vì phải encode/decode thành các ngôn ngữ trung gian JSON/XML... như các request truyền thống. Vì vậy, tối ưu hóa về tài nguyên và tốc độ
+
 <b>ERC:</b> Amazon Elastic Container Registry: là 1 private docker registry của Amazon. Dockerhub là 1 public docker registry. Docker registry là nới để host các image
 
 <b>CCU:</b> Concurrent users (số lượng user đang hoạt động cùng một thời điểm)
