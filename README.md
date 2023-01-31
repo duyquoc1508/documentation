@@ -141,6 +141,14 @@ Có 3 loại deep link:
 - Deferred deep link
 - Contextual deep link
 
+<b>2FA:</b> Two-Factor Authentication
+
+<b>OTP:</b> One-time Password
+
+<b>HOTP:</b> HMAC-based One-Time Password.
+
+<b>TOTP:</b> Time-based One-time Password
+
 # REST APIs standard
 
 Best practice APIs endpoint
