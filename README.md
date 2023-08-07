@@ -426,6 +426,9 @@ cho đên khi xe bus đủ số lượng hành khách tối thiểu để khởi
 
 Ví dụ điển hình để cho thấy cách hoạt động của buffer. Nếu internet đủ nhanh, tốc độ của stream đủ nhanh để lấp đầy buffer ngay lập tức và gửi nó ra ngoài để xử lý, video sẽ được phát thuận lơi đến khi kết thúc. Nhưng nếu kết nối chậm lúc đó sẽ hiện chữ "loading..." hoặc "buffering..." có nghĩa là đang thu thập thêm dữ liêu hoặc chờ dữ liệu đến khi buffer được lấp đầy để xử lý
 
+# MongoDB
+[Thiết kế cơ sở dữ liệu với mongodb Best Practice](https://duthanhduoc.com/blog/thiet-ke-co-so-du-lieu-voi-mongodb)
+
 # Network
 
 ## Ping
