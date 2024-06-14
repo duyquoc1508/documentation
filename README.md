@@ -747,3 +747,27 @@ Topic:
 
 Các positions ( tài sản trong các pool) sẽ được tracked theo một loại token được gọi là cToken. cToken là một loại ERC-20 nó thì đại diện cho một loại tài trong Compound. Ví dụ như nếu bạn deposit ETH vào Compound thì nó sẽ sinh ra lượng cETH tương ứng để chuyển vào tài khoản của bạn. Hay nếu bạn deposit một stablecoin DAI thì bạn cũng sẽ nhận được một lượng cDAI tương tự. Các loại cToken này được gọi là các đồng quản trị nó theo dõi các dòng tiền vào ra của liquidity pool, có thể hiểu là khi một lượng tài sản được deposit vào pool thì một lượng cToken tương ứng của loại tài sản đó sẽ được mint (in) ra và ngược lại khi một lượng tài sản được withdraw ra khỏi pool thì một lượng cToken tương ứng cũng sẽ bị burn (đốt) đi. Điều này giúp các smart contract có thể nắm được số lượng tài sản hiện có trong pool một cách dễ dàng.
 cToken này là đại diện cho lượng tài sản mà người dùng đã đóng góp vào pool nên họ có thể sử
+
+#### Zero knowledge prove (ZKP)
+- Short: Zero-Knowledge Proof (Bằng chứng không tri thức) là một phương pháp mà một bên (người chứng minh) có thể chứng minh cho một bên khác (người xác minh) rằng một tuyên bố là đúng mà không cần tiết lộ bất kỳ thông tin bổ sung nào. 
+- Read more: https://academy.binance.com/vi/articles/what-is-zero-knowledge-proof-and-how-does-it-impact-blockchain
+
+#### Zk rollup 
+Là giải pháp mở rộng Layer 2 giúp giải quyết vấn đề mở rộng trên Ethereum bằng cách đưa các giao dịch ra ngoài chuỗi (off-chain)
+
+* Các thành phần chính
+- Sequencer: Đóng vai trò là thực thi, tổng hợp và đóng gói các giao dịch trên Layer 2 lại thành các Batch (lô)
+- Proposer: Đóng vai trò đăng tải trạng thái mạng (State Root) lên Ethereum. 
+- Prover: Đóng vai trò là tạo bằng chứng chứng minh tính đúng đắn của State Root.
+
+* Cơ chế hoạt động
+- Thực thi & Tổng hợp giao dịch
+- Gửi về Layer 1
+- Tạo ra bằng chứng giao dịch (Validity Proof)
+Mỗi khi Proposer gửi State Root về Layer 1 thì họ cần các Prover có thể tạo bằng chứng cho những State Root đó. Chính vì vậy, khi State Root được gửi cùng với Validity Proof xuống Ethereum thì nền tảng Verifier Contract sẽ chỉ cần xác minh những Validity Proof đó.
+
+Vì sao ZK Rollup giải quyết bài toán mở rộng trên Ethereum?
+- Nén dữ liệu giao dịch: Thay vì thực thi trực tiếp hàng trăm các giao dịch trên Ethereum thì tính toán đó sẽ được mang ra off-chain và xử lý trên ZK Rollup. Biến hàng trăm giao dịch thành một giao dịch duy nhất rồi gửi về Ethereum làm tiết kiệm một lượng lớn phí giao dịch của người dùng từ đó cải thiện khả năng mở rộng cho Ethereum theo hướng off-chain.
+- ZK Proof: ZK Proof có thể là bằng chứng để chứng minh các bằng chứng khác. Hiện tại, mỗi một State Root được gửi từ ZK Rollup xuống Layer 1 thì sẽ được gửi kèm với một bằng chứng giao dịch hợp lệ (Validity Proof). Tuy nhiên, vấn đề là các On-chain Contract trên Ethereum cứ phải xác minh từng bằng chứng một làm cho mạng lưới trở nên chậm chạp hơn. Với Recursive Proofs nó có thể tạo ra nhiều khối và mỗi khối có 1 bằng chứng giao dịch đi kèm sau đó kết hợp nhiều State Root đó và nhiều bằng chứng giao dịch đó, từ nhiều bằng chứng giao dịch tạo ra một bằng chứng giao dịch duy nhất đại diện cho nhiều State Root đó
+
+read more: https://hakresearch.com/zk-rollup-la-gi/
