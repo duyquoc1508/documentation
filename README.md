@@ -429,6 +429,84 @@ Ví dụ điển hình để cho thấy cách hoạt động của buffer. Nếu
 # MongoDB
 [Thiết kế cơ sở dữ liệu với mongodb Best Practice](https://duthanhduoc.com/blog/thiet-ke-co-so-du-lieu-voi-mongodb)
 
+## MongoDB index
+### `autoIndex` trong Mongoose
+
+Trong Mongoose, **`autoIndex`** là một tùy chọn được sử dụng để tự động tạo các chỉ mục (indexes) cho các trường đã được định nghĩa trong **schema** khi mô hình (model) được sử dụng lần đầu tiên. Tuy nhiên, hành vi của `autoIndex` có thể được điều chỉnh tùy theo môi trường phát triển hay môi trường sản xuất của bạn.
+
+### **Khi nào `autoIndex` hoạt động?**
+
+1. **Khi Mongoose Khởi Tạo Mô Hình (Model)**
+   
+   Khi bạn tạo mô hình từ schema trong Mongoose, các chỉ mục sẽ tự động được tạo nếu bạn không tắt tùy chọn `autoIndex`. Điều này có nghĩa là khi bạn gọi `mongoose.model()` để tạo mô hình, Mongoose sẽ tự động tạo các chỉ mục được định nghĩa trong schema nếu chúng chưa tồn tại trong cơ sở dữ liệu.
+
+   ```javascript
+   const userSchema = new mongoose.Schema({
+     username: { type: String, unique: true },
+     email: { type: String, index: true },
+   });
+
+   // Mongoose sẽ tự động tạo chỉ mục khi model này được khởi tạo
+   const User = mongoose.model('User', userSchema);
+   ```
+
+2. **Khi `autoIndex` Được Bật**
+
+   Mặc định, trong môi trường phát triển (development), **`autoIndex`** được bật, tức là các chỉ mục sẽ được tạo tự động khi mô hình lần đầu tiên được sử dụng.
+
+   ```javascript
+   const userSchema = new mongoose.Schema({
+     username: { type: String, unique: true },
+     email: { type: String, index: true },
+   });
+
+   const User = mongoose.model('User', userSchema);  // Các chỉ mục tự động được tạo khi gọi model lần đầu tiên
+   ```
+
+3. **Khi `autoIndex` Bị Tắt**
+
+   Trong môi trường **sản xuất (production)**, **`autoIndex`** thường được tắt để tránh việc tạo chỉ mục mỗi lần ứng dụng khởi động, điều này có thể làm ảnh hưởng tới hiệu suất của cơ sở dữ liệu. Việc tạo chỉ mục trong quá trình khởi tạo có thể gây chậm và làm tắc nghẽn ứng dụng, đặc biệt khi bạn đã có dữ liệu trong cơ sở dữ liệu.
+
+   ```javascript
+   const userSchema = new mongoose.Schema({
+     username: { type: String, unique: true },
+     email: { type: String, index: true },
+   }, { autoIndex: false });  // Tắt tính năng tạo chỉ mục tự động trong môi trường production
+
+   const User = mongoose.model('User', userSchema);  // Không tạo chỉ mục tự động khi model được gọi
+   ```
+
+   Nếu bạn tắt `autoIndex`, bạn sẽ phải tự tay tạo chỉ mục bằng cách sử dụng phương thức `createIndexes()`.
+
+   ```javascript
+   // Sau khi model đã được tạo, bạn có thể tạo chỉ mục thủ công nếu cần
+   User.createIndexes().then(() => {
+     console.log('Indexes created successfully');
+   }).catch(err => {
+     console.error('Error creating indexes:', err);
+   });
+   ```
+
+### **Các Tùy Chọn `autoIndex`**
+`autoIndex` có thể được cấu hình với các giá trị sau:
+
+- **`autoIndex: true` (Mặc định trong môi trường phát triển)**: Tự động tạo chỉ mục khi mô hình được sử dụng lần đầu tiên. Đây là lựa chọn mặc định và hữu ích trong môi trường phát triển khi bạn liên tục thay đổi cấu trúc schema.
+  
+- **`autoIndex: false` (Thường dùng trong môi trường sản xuất)**: Tắt tính năng tạo chỉ mục tự động. Điều này có thể cải thiện hiệu suất trong môi trường sản xuất khi bạn không muốn chỉ mục được tạo lại mỗi lần ứng dụng khởi động.
+
+### **Khi nào bạn nên tắt `autoIndex`?**
+
+- **Trong môi trường sản xuất**: Nếu bạn đã có một lượng dữ liệu lớn trong cơ sở dữ liệu, việc tạo chỉ mục tự động có thể ảnh hưởng đến hiệu suất của ứng dụng khi khởi động hoặc thay đổi cấu trúc. Bạn có thể tắt `autoIndex` và tạo chỉ mục thủ công trong quá trình triển khai hoặc khi cập nhật ứng dụng.
+  
+- **Khi bạn đã kiểm tra và tối ưu hóa các chỉ mục**: Trong môi trường phát triển, bạn có thể bật `autoIndex` để dễ dàng thử nghiệm và tối ưu hóa các chỉ mục, nhưng khi bạn chuyển sang môi trường sản xuất, bạn nên tắt nó để kiểm soát chính xác quá trình tạo chỉ mục.
+
+### **Tóm lại:**
+
+- **Mặc định**: `autoIndex` được bật, và các chỉ mục sẽ tự động được tạo khi mô hình được khởi tạo.
+- **Trong môi trường sản xuất**: Thường tắt `autoIndex` để tránh làm giảm hiệu suất khi khởi động ứng dụng. Việc tạo chỉ mục nên được thực hiện thủ công sau khi triển khai.
+
+Tùy vào môi trường và yêu cầu của ứng dụng, bạn có thể quyết định có nên sử dụng `autoIndex` hay không, hoặc chỉ bật nó trong quá trình phát triển và tắt nó trong quá trình triển khai sản phẩm.
+
 # Network
 
 ## Ping
