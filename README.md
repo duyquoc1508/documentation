@@ -849,3 +849,112 @@ Vì sao ZK Rollup giải quyết bài toán mở rộng trên Ethereum?
 - ZK Proof: ZK Proof có thể là bằng chứng để chứng minh các bằng chứng khác. Hiện tại, mỗi một State Root được gửi từ ZK Rollup xuống Layer 1 thì sẽ được gửi kèm với một bằng chứng giao dịch hợp lệ (Validity Proof). Tuy nhiên, vấn đề là các On-chain Contract trên Ethereum cứ phải xác minh từng bằng chứng một làm cho mạng lưới trở nên chậm chạp hơn. Với Recursive Proofs nó có thể tạo ra nhiều khối và mỗi khối có 1 bằng chứng giao dịch đi kèm sau đó kết hợp nhiều State Root đó và nhiều bằng chứng giao dịch đó, từ nhiều bằng chứng giao dịch tạo ra một bằng chứng giao dịch duy nhất đại diện cho nhiều State Root đó
 
 read more: https://hakresearch.com/zk-rollup-la-gi/
+
+### DEX Smart Contract
+In a **Swap DEX (Decentralized Exchange)** like **Uniswap**, multiple contracts work together to enable token swaps. The main contracts typically include **Factory, Router, and Pair** contracts. Here’s their role:
+
+---
+
+#### 🔹 **1. Factory Contract**
+- The **main registry** for liquidity pools (token pairs).
+- **Creates** new liquidity pools when a new trading pair is added.
+- **Stores the mapping** of token pairs to their corresponding Pair contract addresses.
+
+**Key Functions**
+- `createPair(tokenA, tokenB)`: Deploys a new **Pair contract** for `tokenA` and `tokenB`.
+- `getPair(tokenA, tokenB)`: Returns the Pair contract address.
+- `allPairs()`: Returns a list of all pairs created.
+
+**Example**
+
+If a user wants to trade **Token A ↔ Token B**, but no liquidity pool exists, the **Factory** creates a new **Pair contract**.
+
+---
+
+#### 🔹 **2. Router Contract**
+- The **main user-facing contract** that **handles swaps, adding/removing liquidity, and routing trades**.
+- Calls the **Factory** to find the correct **Pair** contract.
+- Ensures the best price by routing trades across multiple pairs.
+
+**Key Functions**
+- `swapExactTokensForTokens(amountIn, minAmountOut, path, recipient, deadline)`: Swaps `amountIn` of Token A for Token B.
+- `addLiquidity(tokenA, tokenB, amountA, amountB, minA, minB, to, deadline)`: Adds liquidity to a Pair.
+- `removeLiquidity(tokenA, tokenB, liquidity, minA, minB, to, deadline)`: Removes liquidity.
+
+**Example**
+
+A user wants to swap **Token A for Token B**:
+1. The Router **checks the best route** (direct swap or through multiple pairs).
+2. It **calls the Pair contract** to execute the swap.
+3. Tokens are transferred accordingly.
+
+---
+
+#### 🔹 **3. Pair (Liquidity Pool) Contract**
+- **Manages the liquidity pool** for a token pair.
+- Uses the **Constant Product AMM** formula:
+ ```
+  x * y = k
+ ```
+  where `x` and `y` are token reserves, and `k` remains constant.
+
+**Key Functions**
+- `swap(amount0Out, amount1Out, to)`: Executes swaps.
+- `mint(to)`: Mints liquidity provider (LP) tokens.
+- `burn(to)`: Burns LP tokens and returns underlying assets.
+- `getReserves()`: Returns token reserves.
+
+**Example**
+
+If a swap **Token A → Token B** occurs:
+1. **User sends Token A** to the Pair contract.
+2. **Pair contract calculates** the output Token B using the AMM formula.
+3. **Token B is sent to the user**, and reserves are updated.
+
+---
+
+#### 🛠 **Other Contracts in a Swap DEX**
+🔹 **4. Multicall Contract (Optional)**
+- Allows multiple transactions to be executed in one call (e.g., checking multiple prices).
+
+🔹 **5. Fee Collection Contract (Optional)**
+- If the DEX charges a **protocol fee**, a separate contract may be used to collect and distribute fees.
+
+---
+
+#### 🎯 **How These Contracts Work Together**
+1. **Creating a new token pair**
+   - Factory deploys a new **Pair contract** if one doesn’t exist.
+
+2. **Adding liquidity**
+   - Users call the **Router**, which deposits tokens into the **Pair contract**.
+   - In return, users get **LP tokens**.
+
+3. **Swapping tokens**
+   - Users call the **Router** to swap tokens.
+   - Router finds the right **Pair contract** and executes the swap.
+
+4. **Removing liquidity**
+   - Users return LP tokens to the **Router**, which withdraws assets from the **Pair contract**.
+
+---
+
+#### 🚀 **Example Swap Flow**
+Let’s say you want to swap **100 USDT → ETH** on a DEX:
+1. **User calls Router** with `swapExactTokensForTokens(100 USDT, minETH, [USDT, ETH], recipient, deadline)`.
+2. Router **fetches the Pair contract (USDT/ETH)** from the **Factory**.
+3. The Pair contract **calculates ETH output** using the AMM formula.
+4. **ETH is sent to the user**, and **USDT is added to the reserve**.
+
+---
+
+#### 🔥 **Summary**
+| Contract  | Purpose |
+|-----------|---------|
+| **Factory** | Creates and tracks **Pair contracts** (liquidity pools). |
+| **Router** | Handles **swaps, routing, liquidity management**. |
+| **Pair** | Holds **token reserves**, executes **swaps** using AMM. |
+| **Multicall (optional)** | Executes multiple contract calls in one transaction. |
+| **Fee Collection (optional)** | Collects and distributes protocol fees. |
+
+
