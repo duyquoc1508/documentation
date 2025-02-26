@@ -957,4 +957,104 @@ Let’s say you want to swap **100 USDT → ETH** on a DEX:
 | **Multicall (optional)** | Executes multiple contract calls in one transaction. |
 | **Fee Collection (optional)** | Collects and distributes protocol fees. |
 
+---
+#### Uniswap V2 Constant Product Formula and Price Calculation
+
+Uniswap V2 operates on an **Automated Market Maker (AMM)** model, where the liquidity in the pool is maintained by the **constant product formula**: 
+
+```
+x * y = k
+```
+
+Where:
+- **x** = Amount of token **X** in the pool
+- **y** = Amount of token **Y** in the pool
+- **k** = A constant product that remains unchanged after each trade
+
+In this example, let's consider two tokens:
+- **Token X** is **ETH** (Ethereum)
+- **Token Y** is **USDT** (Tether)
+
+##### Example Setup
+
+Let's say we start with a liquidity pool that has the following:
+- **1000 ETH** (Token X)
+- **500,000 USDT** (Token Y)
+
+The constant **k** can be calculated as:
+
+```
+k = x * y = 1000 * 500,000 = 500,000,000
+```
+
+**Step 1: Calculate the Initial Price**
+
+The price of **ETH** in terms of **USDT** is determined by the ratio of **x / y**:
+
+```
+Price of 1 ETH = x / y = 1000 / 500,000 = 0.002 ETH/USDT
+```
+
+This means **1 ETH** is equal to **500 USDT** in this pool.
+
+**Step 2: Execute the Trade**
+
+Now, let’s assume a user wants to trade **100 ETH** for **USDT** (Swap ETH to USDT). After this transaction, the amount of **ETH** in the pool will increase from **1000 ETH** to **1100 ETH**. To maintain the constant product **k**, the amount of **USDT** in the pool will decrease. 
+
+We need to calculate the new amount of **USDT** in the pool.
+
+**Step 3: Calculate the New Amount of USDT**
+
+After the trade, the new number of **ETH** in the pool is **1100**. Using the formula **x * y = k**, we can solve for the new amount of **USDT** (**y'**):
+
+```
+1100 * y' = 500,000,000
+```
+
+Solving for **y'**:
+
+```
+y' = 500,000,000 / 1100 = 454,545.45 USDT
+```
+
+**Step 4: Calculate the Amount of USDT the User Receives**
+
+The user receives the difference between the initial amount of **USDT** and the new amount of **USDT** in the pool:
+
+```
+USDT received = 500,000 - 454,545.45 = 45,454.55 USDT
+```
+
+Thus, the user has received **45,454.55 USDT** in exchange for **100 ETH**.
+
+**Step 5: Calculate the New Price of ETH**
+
+Now, let’s calculate the new price of **ETH** after the trade. The new price of **1 ETH** is:
+
+```
+New Price of 1 ETH = x' / y' = 1100 / 454,545.45 ≈ 0.00242 ETH/USDT
+```
+
+This means **1 ETH** is now equivalent to **412.37 USDT**.
+
+##### Summary of the Example
+
+- **Before the trade**:
+  - **1000 ETH** and **500,000 USDT**
+  - Price of 1 ETH = **500 USDT**
+  
+- **After the trade** (User trades **100 ETH** for **USDT**):
+  - **1100 ETH** and **454,545.45 USDT**
+  - User receives **45,454.55 USDT**
+  - Price of 1 ETH = **412.37 USDT**
+
+##### Key Takeaways
+
+1. **Price Impact**: The price of **ETH** decreased after the trade because the ratio between **ETH** and **USDT** changed. The more **ETH** is added to the pool, the higher the price of **USDT** in terms of **ETH**, and vice versa.
+  
+2. **Constant Product**: Despite the change in the price of **ETH**, the constant product **k** remained the same (500,000,000), ensuring that the pool maintains liquidity.
+
+3. **Liquidity Provider Incentive**: Liquidity providers (LPs) who add **ETH** and **USDT** to the pool earn fees from these trades, but they also face potential **impermanent loss** due to price changes like those demonstrated in this example.
+
+
 
